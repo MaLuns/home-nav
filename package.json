@@ -1,0 +1,19 @@
+{
+  "name": "home-page",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "core-js": "^3.9.1",
+    "less": "^4.1.1",
+    "less-loader": "5.0.0",
+    "nuxt": "^2.15.3",
+    "view-design": "^4.5.0"
+  },
+  "devDependencies": {}
+}
