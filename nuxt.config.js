@@ -43,7 +43,7 @@ export default {
   build: {
     extractCSS: true,
     optimization: {
-      runtimeChunk: 'single',
+      runtimeChunk: 'multiple',
       minimize: undefined,
       minimizer: undefined,
       splitChunks: {
@@ -54,7 +54,7 @@ export default {
       }
     },
     splitChunks: {
-      layouts: false,
+      layouts: true,
       pages: true,
       commons: true
     },

@@ -1,14 +1,14 @@
 <template>
     <div>
-        <NavLayout />
+        <LayoutHeader />
         <Nuxt />
     </div>
 </template>
 <script>
-import NavLayout from './nav'
+import LayoutHeader from './header'
 export default {
     components: {
-        NavLayout
+        LayoutHeader
     }
 }
 </script>
