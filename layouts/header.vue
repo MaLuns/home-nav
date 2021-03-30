@@ -2,25 +2,31 @@
     <header class="nav-container">
         <ul class="nav-container-content">
             <li v-for="(item,index) in nav" :key="index">
-                <NuxtLink :to="item.url" :class="{active:item.url===$route.path}">
-                    {{item.title}}
-                </NuxtLink>
+                <NuxtLink :to="item.url" :class="{active:item.url===$route.path}">{{item.title}}</NuxtLink>
             </li>
+            <li @click="handleOpen">关灯</li>
         </ul>
     </header>
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            nav: []
-        }
-    },
-    async fetch() {
-        this.nav = await this.$mock('/mock/index-nav.json');
-    },
-}
+    export default {
+        data() {
+            return {
+                nav: [],
+            };
+        },
+        async fetch() {
+            this.nav = await this.$mock("/mock/index-nav.json");
+        },
+        methods: {
+            handleOpen() {
+                let classList = document.documentElement.classList;
+                if (classList.contains("dark")) classList.remove("dark");
+                else classList.add("dark");
+            },
+        },
+    };
 </script>
 <style lang="less" scoped>
     .nav-container {
@@ -28,7 +34,6 @@ export default {
         .nav-container-content {
             display: flex;
             list-style: none;
-            color: #000;
             height: 100px;
             align-items: center;
             justify-content: flex-end;
@@ -57,7 +62,7 @@ export default {
                     &::after,
                     &::before {
                         position: absolute;
-                        content: '';
+                        content: "";
                         display: block;
                         width: 40px;
                         height: 1px;
@@ -87,7 +92,7 @@ export default {
 
                     &.active::before,
                     &.active::after {
-                        background-color: #252525;
+                        background-color: var(--bodyColor, #515a6e);
                         opacity: 1;
                         height: 2px;
                         -webkit-transform: scale(0.5) rotate(-30deg);
@@ -99,7 +104,7 @@ export default {
 
                     &:hover::before,
                     &:hover::after {
-                        background-color: #252525;
+                        background-color: var(--bodyColor, #515a6e);
                         opacity: 1;
                         height: 2px;
                         -webkit-transform: scale(0.5) rotate(-30deg);

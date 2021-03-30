@@ -1,13 +1,21 @@
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
+:root {
+    --bodyBgColor   : #f1f5f8;
+    --bodyColor     : #515a6e;
+    --navCardBgColor: #fff;
+}
+
+:root.dark {
+    --bodyBgColor   : #272727;
+    --bodyColor     : #f1f5f8;
+    --navCardBgColor: #121111;
+}
+
 html {
     font-family             : sans-serif;
     line-height             : 1.15;
     -ms-text-size-adjust    : 100%;
     -webkit-text-size-adjust: 100%
-}
-
-body {
-    margin: 0
 }
 
 article,
@@ -260,8 +268,9 @@ body {
     font-family            : "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     font-size              : 14px;
     line-height            : 1.5;
-    color                  : #515a6e;
-    background-color       : #f1f5f8;
+    color                  : var(--bodyColor, #515a6e);
+    background-color       : var(--bodyBgColor, #f1f5f8);
+    margin                 : 0;
     -webkit-font-smoothing : antialiased;
     -moz-osx-font-smoothing: grayscale
 }

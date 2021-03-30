@@ -16,6 +16,10 @@
         "url": "/wallpaper"
     },
     {
+        "title": "热榜",
+        "url": "/hot"
+    },
+    {
         "title": "工具",
         "url": "/tool"
     }

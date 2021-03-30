@@ -49,3 +49,15 @@ for (let index = 0; index < temp1.children.length; index++) {
     idx++;
 }
 copy(nav)
+
+
+var arr = []
+document.querySelectorAll('.row .item').forEach(item => {
+    arr.push({
+        url: item.querySelector('.a').href,
+        logo: item.querySelector('img').src,
+        title: item.querySelector('h3').innerText,
+        desc: item.querySelector('p').innerText,
+    })
+})
+copy(arr)

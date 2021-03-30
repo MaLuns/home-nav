@@ -2,39 +2,41 @@
     <div class="container">
         <div class="search-box">
             <select class="search-box-select" v-model="type">
-                <option :label="item.title" :value="item.title" v-for="(item,index) in search" :key="index"></option>
+                <option :label="item.title" :value="item.title" v-for="(item, index) in search" :key="index"></option>
             </select>
-            <input class="search-box-input" type="text" v-model="searchStr">
-            <input class="search-box-btn" value="搜索" @click="handleSubmit" type="submit">
+            <input class="search-box-input" type="text" v-model="searchStr" />
+            <div class="search-box-btn" @click="handleSubmit">搜索</div>
         </div>
     </div>
 </template>
 
 <script>
-export default {
-    head: {
-        title: "主页",
-    },
-    data() {
-        return {
-            type: '',
-            searchStr: '',
-            search: []
-        }
-    },
-    async fetch() {
-        this.search = await this.$mock('/mock/search.json');
-        this.type = this.search[0].title
-    },
-    methods: {
-        handleSubmit() {
-            if (this.searchStr) {
-                const type = this.search.find(item => item.title === this.type)
-                window.open(`${type.action}?${type.name}=${this.searchStr}`)
-            }
-        }
-    },
-}
+    export default {
+        head: {
+            title: "主页",
+        },
+        data() {
+            return {
+                type: "",
+                searchStr: "",
+                search: [],
+            };
+        },
+        async fetch() {
+            this.search = await this.$mock("/mock/search.json");
+            this.type = this.search[0].title;
+        },
+        methods: {
+            handleSubmit() {
+                if (this.searchStr) {
+                    const type = this.search.find(
+                        (item) => item.title === this.type
+                    );
+                    window.open(`${type.action}?${type.name}=${this.searchStr}`);
+                }
+            },
+        },
+    };
 </script>
 <style lang="less" scoped>
     .container {
@@ -44,6 +46,7 @@ export default {
         display: flex;
         width: 50%;
         margin: 0 auto;
+        box-shadow: 4px 10px 9px 0 rgba(97, 150, 242, 0.03);
 
         &-select {
             border: none;
@@ -58,8 +61,9 @@ export default {
             text-align: center;
             width: 80px;
             letter-spacing: 5px;
-            background: #fff;
+            background: #eaeaea;
             cursor: pointer;
+            line-height: 42px;
         }
 
         &-input {

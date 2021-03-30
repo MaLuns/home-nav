@@ -7,7 +7,7 @@
 <script>
     export default {
         head: {
-            title: "工具合集",
+            title: "热榜聚合",
         },
         data() {
             return {
@@ -15,7 +15,7 @@
             };
         },
         async fetch() {
-            this.list = await this.$mock("/mock/tool.json");
+            this.list = await this.$mock("/mock/hot.json");
         },
     };
 </script>
