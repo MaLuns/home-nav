@@ -1,0 +1,115 @@
+<template>
+    <div class="nav-container">
+        <ul class="nav-container-content">
+            <li v-for="(item,index) in nav" :key="index">
+                <NuxtLink :to="item.url" :class="{active:item.url===$route.path}">
+                    {{item.title}}
+                </NuxtLink>
+            </li>
+        </ul>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            nav: []
+        }
+    },
+    async fetch() {
+        this.nav = await this.$mock('/mock/index-nav.json');
+    },
+}
+</script>
+<style lang="less" scoped>
+    .nav-container {
+        height: 100px;
+    }
+    .nav-container-content {
+        display: flex;
+        list-style: none;
+        color: #000;
+        height: 100px;
+        align-items: center;
+        justify-content: flex-end;
+        position: fixed;
+        padding-right: 60px;
+        width: 100%;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        z-index: 999;
+
+        li {
+            display: inline-block;
+            padding-left: 40px;
+
+            a {
+                color: inherit;
+                position: relative;
+                display: block;
+                padding: 11px 0;
+                font-size: 16px;
+                font-family: quicksand, sans-serif;
+                text-transform: uppercase;
+                font-weight: 700;
+                letter-spacing: 2px;
+
+                &::after,
+                &::before {
+                    position: absolute;
+                    content: '';
+                    display: block;
+                    width: 40px;
+                    height: 1px;
+                    margin-right: -5px;
+                    opacity: 0;
+                    -webkit-transition: all 0.3s;
+                    -moz-transition: all 0.3s;
+                    -ms-transition: all 0.3s;
+                    -o-transition: all 0.3s;
+                    transition: all 0.3s;
+                    -webkit-transform: scale(1) rotate(-30deg);
+                    -moz-transform: scale(1) rotate(-30deg);
+                    -ms-transform: scale(1) rotate(-30deg);
+                    -o-transform: scale(1) rotate(-30deg);
+                    transform: scale(1) rotate(-30deg);
+                }
+
+                &::before {
+                    top: 0;
+                    left: 50%;
+                }
+
+                &::after {
+                    bottom: 0;
+                    right: 50%;
+                }
+
+                &.active::before,
+                &.active::after {
+                    background-color: #252525;
+                    opacity: 1;
+                    height: 2px;
+                    -webkit-transform: scale(0.5) rotate(-30deg);
+                    -moz-transform: scale(0.5) rotate(-30deg);
+                    -ms-transform: scale(0.5) rotate(-30deg);
+                    -o-transform: scale(0.5) rotate(-30deg);
+                    transform: scale(0.5) rotate(-30deg);
+                }
+
+                &:hover::before,
+                &:hover::after {
+                    background-color: #252525;
+                    opacity: 1;
+                    height: 2px;
+                    -webkit-transform: scale(0.5) rotate(-30deg);
+                    -moz-transform: scale(0.5) rotate(-30deg);
+                    -ms-transform: scale(0.5) rotate(-30deg);
+                    -o-transform: scale(0.5) rotate(-30deg);
+                    transform: scale(0.5) rotate(-30deg);
+                }
+            }
+        }
+    }
+</style>

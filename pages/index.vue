@@ -1,74 +1,82 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        home-page
-      </h1>
-      <h2 class="subtitle">
-        Welcome to the View UI + Nuxt.js template
-      </h2>
-      <div class="links">
-        <Button type="primary" target="_blank" rel="noopener noreferrer" to="https://nuxtjs.org/">
-          Documentation
-        </Button>
-        <Button target="_blank" rel="noopener noreferrer" to="https://github.com/nuxt/nuxt.js">
-          GitHub
-        </Button>
-        <Button target="_blank" rel="noopener noreferrer" to="https://www.iviewui.com/">
-          View UI
-        </Button>
-      </div>
+    <div class="container">
+        <div class="search-box">
+            <select class="search-box-select" v-model="type">
+                <option :label="item.title" :value="item.title" v-for="(item,index) in search" :key="index"></option>
+            </select>
+            <input class="search-box-input" type="text" v-model="searchStr">
+            <input class="search-box-btn" value="搜索" @click="handleSubmit" type="submit">
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 export default {
-  components: {
-    Logo
-  }
+    head: {
+        title: "主页",
+    },
+    data() {
+        return {
+            type: '',
+            searchStr: '',
+            search: []
+        }
+    },
+    async fetch() {
+        this.search = await this.$mock('/mock/search.json');
+        this.type = this.search[0].title
+    },
+    methods: {
+        handleSubmit() {
+            if (this.searchStr) {
+                const type = this.search.find(item => item.title === this.type)
+                window.open(`${type.action}?${type.name}=${this.searchStr}`)
+            }
+        }
+    },
 }
 </script>
+<style lang="less" scoped>
+    .container {
+        margin-top: 100px;
+    }
+    .search-box {
+        display: flex;
+        width: 50%;
+        margin: 0 auto;
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+        &-select {
+            border: none;
+            outline: 0;
+            text-align: center;
+            text-align-last: center;
+        }
 
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+        &-btn {
+            border: none;
+            outline: 0;
+            text-align: center;
+            width: 80px;
+            letter-spacing: 5px;
+            background: #fff;
+            cursor: pointer;
+        }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
+        &-input {
+            height: 42px;
+            border: 0 solid #fff;
+            border-radius: 3px 0 0 3px;
+            display: block;
+            outline: 0;
+            flex: 1;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+    }
 </style>

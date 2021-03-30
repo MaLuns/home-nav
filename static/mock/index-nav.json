@@ -1,0 +1,22 @@
+[
+    {
+        "title": "首页",
+        "url": "/"
+    },
+    {
+        "title": "导航",
+        "url": "/nav"
+    },
+    {
+        "title": "设计",
+        "url": "/design"
+    },
+    {
+        "title": "壁纸",
+        "url": "/wallpaper"
+    },
+    {
+        "title": "工具",
+        "url": "/tool"
+    }
+]

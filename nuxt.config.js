@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'home-page',
+    title: '导航',
     htmlAttrs: {
       lang: 'en'
     },
@@ -11,18 +11,21 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      { rel: 'stylesheet', href: '/styles/index.css' }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    'view-design/dist/styles/iview.css'
+    /* 'view-design/dist/styles/iview.css' */
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/view-ui'
+    /* '@/plugins/view-ui', */
+    '@/plugins/mock',
+    "@/plugins/gloab.components"
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,5 +41,22 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extractCSS: true,
+    optimization: {
+      runtimeChunk: 'single',
+      minimize: undefined,
+      minimizer: undefined,
+      splitChunks: {
+        chunks: 'all',
+        automaticNameDelimiter: '.',
+        name: undefined,
+        cacheGroups: {}
+      }
+    },
+    splitChunks: {
+      layouts: false,
+      pages: true,
+      commons: true
+    },
   }
 }
