@@ -25,7 +25,7 @@
                 let classList = document.documentElement.classList;
                 if (classList.contains("dark")) classList.remove("dark");
                 else classList.add("dark");
-                this.isActive = !this.isActive
+                this.isActive = !this.isActive;
             },
         },
     };
@@ -64,7 +64,7 @@
                     &::after,
                     &::before {
                         position: absolute;
-                        content: '';
+                        content: "";
                         display: block;
                         width: 40px;
                         height: 1px;
@@ -123,7 +123,7 @@
                 flex-shrink: 0;
                 cursor: pointer;
                 background: var(--ion-color-step-150, #d1d6dc);
-                width: 60px;
+                width: 54px;
                 height: 24px;
                 border-radius: 12px;
                 position: relative;
@@ -131,19 +131,19 @@
                 transition: all 0.3s;
 
                 &::after {
-                    content: '';
-                    width: 20px;
-                    height: 20px;
+                    content: "";
+                    width: 16px;
+                    height: 16px;
                     background: var(--ion-color-step-800, #c9ccce);
                     position: absolute;
-                    border-radius: 10px;
-                    top: 2px;
-                    left: 2px;
+                    border-radius: 50%;
+                    top: 4px;
+                    left: 4px;
                     transition: all 0.3s;
                 }
 
                 &.active::after {
-                    left: 36px;
+                    left: 34px;
                 }
             }
         }

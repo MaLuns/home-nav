@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="header"></div>
-        <ul :id="item.title" class="container" v-for="(item, index) in list" :key="index">
+        <ul :id="item.title" class="container" v-for="(item, index) in navList" :key="index">
             <div class="class-title">{{ item.title }}</div>
             <ul class="row">
                 <li class="col" v-for="(element, idx) in item.children" :key="idx">
@@ -16,24 +16,57 @@
             </ul>
         </ul>
         <ul class="left-nav" v-if="list.length>3">
-            <span class="left-nav-tag" :style="{top:checkIndex*60+30+'px'}"></span>
-            <li @click="handleScroll(item,index)" class="left-nav-title" :class="{active:index===checkIndex}" v-for="(item, index) in list" :key="index">{{ item.title }}</li>
+            <!--  <span class="left-nav-tag" :style="{top:checkIndex*60+30+'px'}"></span> -->
+            <span class="left-nav-tag" :style="{top:top*60+30+'px'}"></span>
+            <li @click="handleScroll(item,item.index)" class="left-nav-title" :class="{active:checkIndex===item.index}" v-for="item in leftNavList" :key="item.index">{{ item.title }}</li>
         </ul>
     </div>
 </template>
 
 <script>
-    import notLogo from '~/assets/notlogo.png'
+    import notLogo from "~/assets/notlogo.png";
     export default {
         data() {
             return {
                 notLogo,
                 checkIndex: 0,
+                count: 4,
             };
+        },
+        computed: {
+            navList({ list }) {
+                return Object.freeze(
+                    list.map((item, index) => ({
+                        ...item,
+                        index,
+                    }))
+                );
+            },
+            leftNavList({ navList = [], checkIndex, count }) {
+                let arr = [];
+                if (checkIndex + count < navList.length) {
+                    arr = navList.slice(checkIndex, checkIndex + count);
+                } else if (count >= navList.length) {
+                    arr = navList;
+                } else {
+                    arr = navList.slice(navList.length - count, navList.length);
+                }
+                return arr;
+            },
+            top({ navList = [], checkIndex, count }) {
+                if (count >= navList.length) {
+                    return checkIndex;
+                } else if (checkIndex + count > navList.length) {
+                    return checkIndex + count - navList.length;
+                } else {
+                    return 0;
+                }
+            },
         },
         props: {
             list: {
                 type: Array,
+                require: true,
                 default() {
                     return [];
                 },
@@ -62,9 +95,16 @@
                     }
                 }
             };
+
+            const _count = () => {
+                this.count = parseInt((window.innerHeight - 400) / 61);
+            };
+            _count();
             window.addEventListener("scroll", scroll);
+            window.addEventListener("resize", _count);
             this.$once("hook:beforeDestroy", () => {
                 window.removeEventListener("scroll", scroll);
+                window.removeEventListener("resize", _count);
             });
         },
         methods: {
@@ -77,7 +117,7 @@
             },
             handleError(item) {
                 item.logo = notLogo;
-            }
+            },
         },
     };
 </script>
@@ -174,7 +214,7 @@
         top: 200px;
         transform: translateX(50vw);
         background: var(--ion-color-step, #fff);
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 10px 0 var(--left-nav-active-background-color, #f0f2fc);
 
         &-title {
             height: 60px;
@@ -208,7 +248,7 @@
             transition: top 0.3s;
 
             &::before {
-                content: '';
+                content: "";
                 height: 60px;
                 width: 60px;
                 background-color: var(--left-nav-active-background-color, #f0f2fc);
@@ -218,7 +258,7 @@
                 z-index: -2;
             }
             &::after {
-                content: '';
+                content: "";
                 height: 30px;
                 width: 3px;
                 background-color: #3f51b5;

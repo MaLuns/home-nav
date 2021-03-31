@@ -4,12 +4,10 @@
             <div class="select">
                 {{type}}
                 <div class="select-items">
-                    <div @click="type=item.title" class="item" v-for="(item, index) in search" :key="index">
-                        {{item.title}}
-                    </div>
+                    <div @click="type=item.title" class="item" v-for="(item, index) in search" :key="index">{{item.title}}</div>
                 </div>
             </div>
-            <input class="search-box-input" type="text" v-model="searchStr" @keyup.enter="handleSubmit()" />
+            <input class="search-box-input" :placeholder="placeholder" type="text" v-model="searchStr" @keyup.enter="handleSubmit()" />
             <div class="search-box-btn" @click="handleSubmit">搜索</div>
         </div>
     </div>
@@ -25,6 +23,7 @@
                 type: "",
                 searchStr: "",
                 search: [],
+                placeholder: "搜索一下～",
             };
         },
         async fetch() {
@@ -34,7 +33,9 @@
         methods: {
             handleSubmit() {
                 if (this.searchStr) {
-                    const type = this.search.find((item) => item.title === this.type);
+                    const type = this.search.find(
+                        (item) => item.title === this.type
+                    );
                     window.open(`${type.action}?${type.name}=${this.searchStr}`);
                 }
             },
@@ -68,6 +69,7 @@
                 background: var(--ion-color-step, #fff);
                 padding: 0 10px;
                 display: inline-block;
+                text-align: center;
                 width: 80px;
 
                 &:hover {
@@ -90,7 +92,7 @@
         display: flex;
         width: 50%;
         margin: 0 auto;
-        box-shadow: 4px 10px 9px 0 rgba(97, 150, 242, 0.03);
+        //box-shadow: 4px 10px 9px 0 rgba(97, 150, 242, 0.03);
 
         &-select {
             border: none;

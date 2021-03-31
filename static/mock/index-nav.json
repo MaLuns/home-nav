@@ -22,5 +22,9 @@
     {
         "title": "工具",
         "url": "/tool"
+    },
+    {
+        "title": "前端",
+        "url": "/web"
     }
 ]
