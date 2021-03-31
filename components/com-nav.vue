@@ -7,7 +7,7 @@
                 <li class="col" v-for="(element, idx) in item.children" :key="idx">
                     <a class="card-link" :href="element.url" target="_blank">
                         <div class="card-tit">
-                            <img :src="element.logo" alt />
+                            <img :src="element.logo || notLogo" alt @error="handleError(element)" />
                             <div class="name">{{ element.title }}</div>
                         </div>
                         <div class="card-desc" v-if="isDesc">{{ element.desc }}</div>
@@ -23,9 +23,11 @@
 </template>
 
 <script>
+    import notLogo from '~/assets/notlogo.png'
     export default {
         data() {
             return {
+                notLogo,
                 checkIndex: 0,
             };
         },
@@ -68,11 +70,14 @@
         methods: {
             handleScroll(item, index) {
                 this.checkIndex = index;
-                window.scrollTo({
+                window.scroll({
                     top: document.getElementById(item.title).offsetTop - 120,
-                    //behavior: "smooth",
+                    behavior: "smooth",
                 });
             },
+            handleError(item) {
+                item.logo = notLogo;
+            }
         },
     };
 </script>
@@ -84,7 +89,7 @@
 
         .class-title {
             height: 45px;
-            color: #444;
+            color: var(--ion-color-step-900, #616a7c);
             font-weight: 600;
             font-size: 18px;
             line-height: 45px;
@@ -105,7 +110,7 @@
                     overflow: hidden;
                     padding: 10px 10px;
                     border-radius: 5px;
-                    background-color: var(--navCardBgColor, #fff);
+                    background-color: var(--nav-card-bg-color, #fff);
                     -webkit-transition: all 0.2s ease-out;
                     -moz-transition: all 0.2s ease-out;
                     -o-transition: all 0.2s ease-out;
@@ -113,9 +118,8 @@
 
                     &:hover {
                         -moz-box-shadow: 4px 4px 10px
-                            var(--navCardBgColor, rgba(180, 195, 255, 0.35));
-                        box-shadow: 4px 4px 10px
-                            var(--navCardBgColor, rgba(180, 195, 255, 0.35));
+                            var(--ion-color-step-50, #e9edf1);
+                        box-shadow: 4px 4px 10px var(--ion-color-step-50, #e9edf1);
                         -webkit-transform: translateY(-5px);
                         -moz-transform: translateY(-5px);
                         -o-transform: translateY(-5px);
@@ -126,7 +130,7 @@
 
                 .card-tit {
                     height: 40px;
-                    color: #555;
+                    color: var(--ion-color-step-700, #818997);
                     font-weight: 700;
                     font-size: 14px;
 
@@ -155,7 +159,7 @@
                     margin-top: 3px;
                     height: 25px;
                     max-width: 99.5%;
-                    color: #777;
+                    color: var(--ion-color-step-500, #a1a8b3);
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     font-size: 12px;
@@ -169,14 +173,14 @@
         position: fixed;
         top: 200px;
         transform: translateX(50vw);
-        background: var(--navCardBgColor, #fff);
+        background: var(--ion-color-step, #fff);
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 
         &-title {
             height: 60px;
             width: 60px;
-            border-bottom: 1px solid #ededed;
-            color: rgba(0, 0, 0, 0.6);
+            border-bottom: 1px solid var(--ion-color-step-100, #e1e6ea);
+            color: var(--ion-color-step-600, #9198a5);
             line-height: 20px;
             letter-spacing: 1px;
             position: relative;
@@ -188,9 +192,8 @@
             text-align: center;
             cursor: pointer;
             &.active {
-                color: #3f51b5;
+                color: var(--left-nav-active-text-color, #3f51b5);
                 transition: color 0.2s 0.2s;
-                //background-color: #f0f2fc;
             }
         }
 
@@ -198,7 +201,6 @@
             display: block;
             height: 30px;
             width: 3px;
-            background-color: #3f51b5;
             position: absolute;
             right: 0;
             z-index: -1;
@@ -206,17 +208,17 @@
             transition: top 0.3s;
 
             &::before {
-                content: "";
+                content: '';
                 height: 60px;
                 width: 60px;
-                background-color: #f0f2fc;
+                background-color: var(--left-nav-active-background-color, #f0f2fc);
                 position: absolute;
                 left: -57px;
                 top: -15px;
                 z-index: -2;
             }
             &::after {
-                content: "";
+                content: '';
                 height: 30px;
                 width: 3px;
                 background-color: #3f51b5;

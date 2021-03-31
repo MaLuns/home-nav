@@ -4,7 +4,7 @@
             <li v-for="(item,index) in nav" :key="index">
                 <NuxtLink :to="item.url" :class="{active:item.url===$route.path}">{{item.title}}</NuxtLink>
             </li>
-            <li @click="handleOpen">关灯</li>
+            <li @click="handleOpen" class="switch-theme" :class="{active:isActive}"></li>
         </ul>
     </header>
 </template>
@@ -13,6 +13,7 @@
     export default {
         data() {
             return {
+                isActive: false,
                 nav: [],
             };
         },
@@ -24,6 +25,7 @@
                 let classList = document.documentElement.classList;
                 if (classList.contains("dark")) classList.remove("dark");
                 else classList.add("dark");
+                this.isActive = !this.isActive
             },
         },
     };
@@ -62,7 +64,7 @@
                     &::after,
                     &::before {
                         position: absolute;
-                        content: "";
+                        content: '';
                         display: block;
                         width: 40px;
                         height: 1px;
@@ -113,6 +115,35 @@
                         -o-transform: scale(0.5) rotate(-30deg);
                         transform: scale(0.5) rotate(-30deg);
                     }
+                }
+            }
+
+            .switch-theme {
+                margin-left: 40px;
+                flex-shrink: 0;
+                cursor: pointer;
+                background: var(--ion-color-step-150, #d1d6dc);
+                width: 60px;
+                height: 24px;
+                border-radius: 12px;
+                position: relative;
+                display: inline-block;
+                transition: all 0.3s;
+
+                &::after {
+                    content: '';
+                    width: 20px;
+                    height: 20px;
+                    background: var(--ion-color-step-800, #c9ccce);
+                    position: absolute;
+                    border-radius: 10px;
+                    top: 2px;
+                    left: 2px;
+                    transition: all 0.3s;
+                }
+
+                &.active::after {
+                    left: 36px;
                 }
             }
         }

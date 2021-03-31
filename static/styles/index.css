@@ -1,14 +1,68 @@
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 :root {
-    --bodyBgColor   : #f1f5f8;
-    --bodyColor     : #515a6e;
-    --navCardBgColor: #fff;
+    --nav-card-bg-color               : #fff;
+    --left-nav-active-background-color: #f0f2fc;
+    --left-nav-active-text-color      : #3f51b5;
+
+    --ion-background-color    : #f1f5f8;
+    --ion-background-color-rgb: 241, 245, 248;
+
+    --ion-text-color    : #515a6e;
+    --ion-text-color-rgb: 81, 90, 110;
+
+    --ion-color-step    : #ffffff;
+    --ion-color-step-50 : #e9edf1;
+    --ion-color-step-100: #e1e6ea;
+    --ion-color-step-150: #d9dee3;
+    --ion-color-step-200: #d1d6dc;
+    --ion-color-step-250: #c9ced6;
+    --ion-color-step-300: #c1c7cf;
+    --ion-color-step-350: #b9bfc8;
+    --ion-color-step-400: #b1b7c1;
+    --ion-color-step-450: #a9afba;
+    --ion-color-step-500: #a1a8b3;
+    --ion-color-step-550: #99a0ac;
+    --ion-color-step-600: #9198a5;
+    --ion-color-step-650: #89909e;
+    --ion-color-step-700: #818997;
+    --ion-color-step-750: #798191;
+    --ion-color-step-800: #71798a;
+    --ion-color-step-850: #697183;
+    --ion-color-step-900: #616a7c;
+    --ion-color-step-950: #596275;
 }
 
 :root.dark {
-    --bodyBgColor   : #272727;
-    --bodyColor     : #f1f5f8;
-    --navCardBgColor: #121111;
+    --nav-card-bg-color               : #121111;
+    --left-nav-active-background-color: #272729;
+    --left-nav-active-text-color      : #c1c9f7;
+
+    --ion-background-color    : #272727;
+    --ion-background-color-rgb: 39, 39, 39;
+
+    --ion-text-color    : #f1f5f8;
+    --ion-text-color-rgb: 241, 245, 248;
+
+    --ion-color-step    : #000000;
+    --ion-color-step-50 : #313131;
+    --ion-color-step-100: #3b3c3c;
+    --ion-color-step-150: #454646;
+    --ion-color-step-200: #4f5051;
+    --ion-color-step-250: #5a5b5b;
+    --ion-color-step-300: #646566;
+    --ion-color-step-350: #6e6f70;
+    --ion-color-step-400: #78797b;
+    --ion-color-step-450: #828485;
+    --ion-color-step-500: #8c8e90;
+    --ion-color-step-550: #96989a;
+    --ion-color-step-600: #a0a3a4;
+    --ion-color-step-650: #aaadaf;
+    --ion-color-step-700: #b4b7b9;
+    --ion-color-step-750: #bfc2c4;
+    --ion-color-step-800: #c9ccce;
+    --ion-color-step-850: #d3d6d9;
+    --ion-color-step-900: #dde0e3;
+    --ion-color-step-950: #e7ebee;
 }
 
 html {
@@ -268,8 +322,8 @@ body {
     font-family            : "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     font-size              : 14px;
     line-height            : 1.5;
-    color                  : var(--bodyColor, #515a6e);
-    background-color       : var(--bodyBgColor, #f1f5f8);
+    background-color       : var(--ion-background-color, #f1f5f8);
+    color                  : var(--ion-color-step-750, #515a6e);
     margin                 : 0;
     -webkit-font-smoothing : antialiased;
     -moz-osx-font-smoothing: grayscale

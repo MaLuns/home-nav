@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "core-js": "^3.9.1",
-    "less": "^4.1.1",
-    "less-loader": "5.0.0",
     "nuxt": "^2.15.3",
     "view-design": "^4.5.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.5",
+    "less": "^4.1.1",
+    "node-fetch": "^2.6.1",
+    "less-loader": "5.0.0"
+  }
 }

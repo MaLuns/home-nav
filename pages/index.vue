@@ -1,10 +1,15 @@
 <template>
     <div class="container">
         <div class="search-box">
-            <select class="search-box-select" v-model="type">
-                <option :label="item.title" :value="item.title" v-for="(item, index) in search" :key="index"></option>
-            </select>
-            <input class="search-box-input" type="text" v-model="searchStr" />
+            <div class="select">
+                {{type}}
+                <div class="select-items">
+                    <div @click="type=item.title" class="item" v-for="(item, index) in search" :key="index">
+                        {{item.title}}
+                    </div>
+                </div>
+            </div>
+            <input class="search-box-input" type="text" v-model="searchStr" @keyup.enter="handleSubmit()" />
             <div class="search-box-btn" @click="handleSubmit">搜索</div>
         </div>
     </div>
@@ -29,9 +34,7 @@
         methods: {
             handleSubmit() {
                 if (this.searchStr) {
-                    const type = this.search.find(
-                        (item) => item.title === this.type
-                    );
+                    const type = this.search.find((item) => item.title === this.type);
                     window.open(`${type.action}?${type.name}=${this.searchStr}`);
                 }
             },
@@ -40,8 +43,49 @@
 </script>
 <style lang="less" scoped>
     .container {
-        margin-top: 100px;
+        margin-top: 200px;
     }
+
+    .select {
+        width: 80px;
+        position: relative;
+        background: var(--ion-color-step-50, #fff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        .select-items {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            padding-top: 10px;
+            width: 240px;
+
+            .item {
+                line-height: 40px;
+                background: var(--ion-color-step, #fff);
+                padding: 0 10px;
+                display: inline-block;
+                width: 80px;
+
+                &:hover {
+                    background-color: var(
+                        --left-nav-active-background-color,
+                        #f0f2fc
+                    );
+                }
+            }
+        }
+
+        &:hover {
+            .select-items {
+                display: initial;
+            }
+        }
+    }
+
     .search-box {
         display: flex;
         width: 50%;
@@ -61,14 +105,14 @@
             text-align: center;
             width: 80px;
             letter-spacing: 5px;
-            background: #eaeaea;
+            background-color: var(--ion-color-step-100, #e1e6ea);
             cursor: pointer;
             line-height: 42px;
         }
 
         &-input {
             height: 42px;
-            border: 0 solid #fff;
+            border: 0 solid var(--ion-color-step, #fff);
             border-radius: 3px 0 0 3px;
             display: block;
             outline: 0;
@@ -77,8 +121,8 @@
             font-size: 1rem;
             font-weight: 400;
             line-height: 1.5;
-            color: #495057;
-            background-color: #fff;
+            color: var(--ion-color-step-950, #596275);
+            background-color: var(--ion-color-step, #fff);
             background-clip: padding-box;
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
