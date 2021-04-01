@@ -15,7 +15,7 @@
                 </li>
             </ul>
         </ul>
-        <ul class="left-nav" v-if="list.length>3">
+        <ul class="left-nav" v-if="list.length>3 && count>0">
             <!--  <span class="left-nav-tag" :style="{top:checkIndex*60+30+'px'}"></span> -->
             <span class="left-nav-tag" :style="{top:top*60+30+'px'}"></span>
             <li @click="handleScroll(item,item.index)" class="left-nav-title" :class="{active:checkIndex===item.index}" v-for="item in leftNavList" :key="item.index">{{ item.title }}</li>
@@ -248,7 +248,7 @@
             transition: top 0.3s;
 
             &::before {
-                content: "";
+                content: '';
                 height: 60px;
                 width: 60px;
                 background-color: var(--left-nav-active-background-color, #f0f2fc);
@@ -258,7 +258,7 @@
                 z-index: -2;
             }
             &::after {
-                content: "";
+                content: '';
                 height: 30px;
                 width: 3px;
                 background-color: #3f51b5;

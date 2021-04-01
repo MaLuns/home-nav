@@ -1,6 +1,8 @@
 //http://www.qiachu.com/
 const cheerio = require('cheerio');
 const fetch = require('node-fetch')
+const { write } = require('./util')
+const path = require('path')
 
 String.prototype.replaceAll = function (str, str2) {
     return this.split(str).join(str2)
@@ -9,11 +11,10 @@ String.prototype.replaceAll = function (str, str2) {
 async function getHTML(url, frisrt = true) {
     let data = await fetch(url).then(res => (res.text()))
     let $ = cheerio.load(data);
-    let items = $('.item').toArray();
 
     let promises = []
-    for (let index = 0; index < items.length; index++) {
-        const item = $(items[index]);
+    $('.item').each(function () {
+        const item = $(this);
         let obj = {
             url: item.find('.a').attr('href'),
             logo: item.find('img').attr('src'),
@@ -27,7 +28,7 @@ async function getHTML(url, frisrt = true) {
                 return obj;
             })
         )
-    }
+    });
 
     if (frisrt) {
         let url_list = []
@@ -58,4 +59,8 @@ const getQCJson = (url) => {
     })
 }
 
-module.exports = getQCJson
+
+getQCJson('http://www.qiachu.com/category-2.html').then(res => {
+    let data = [{ "title": "排行", "icon": "", "children": res }]
+    write(path.resolve(__dirname, '../static/mock/hot.json'), JSON.stringify(data))
+})

@@ -1,4 +1,16 @@
-export default {
+module.exports = {
+  telemetry: false, // 关闭提示
+
+  server: {
+    port: 7000,
+  },
+
+  env: {
+    baseURL: "http://localhost:7000",
+    port: 7000,
+    db: "mongodb://localhost/home-nav"
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: '导航',

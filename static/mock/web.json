@@ -280,12 +280,6 @@
                 "desc": "最全的CDN公用库, 速度不是太稳定。"
             },
             {
-                "url": "https://docs.microsoft.com/en-us/aspnet/ajax/cdn/overview",
-                "title": "微软CDN",
-                "logo": "https://webjike.com/upload/images/2018/3/9f09d5ccb0a47177.jpg",
-                "desc": "微软公司提供的公共CDN服务。"
-            },
-            {
                 "url": "http://jscdn.upai.com/?spm=a2c4e.11155515.0.0.kf06Hb",
                 "title": "又拍云CDN",
                 "logo": "https://webjike.com/upload/images/2018/3/76d6ac7d8bfee713.jpg",
@@ -424,12 +418,6 @@
                 "desc": "开源中国是目前中国最大的开源技术社区，我们传播开源的理念，推广开源项目，为 IT 开发者提供了一个发现、使用、并交流开源技术的平台。"
             },
             {
-                "url": "",
-                "title": "深度开源",
-                "logo": "https://webjike.com/upload/images/2018/4/e30d7274ca9bb76e.gif",
-                "desc": "收录最全、最新的开源软件/开源项目，发掘开源价值,发布最新IT资讯，提供开发文档，技术经验分享。"
-            },
-            {
                 "url": "http://www.daqianduan.com/",
                 "title": "大前端",
                 "logo": "https://webjike.com/upload/images/2018/4/d41490fb046ac65d.png",
@@ -518,12 +506,6 @@
                 "title": "Bootflat",
                 "logo": "https://webjike.com/upload/images/2018/4/6f63611bb745ca72.png",
                 "desc": "Bootflat - 基于bootstrap 3.2.0 的扁平化风格的UI组件的开源项目。"
-            },
-            {
-                "url": "",
-                "title": "BUI",
-                "logo": "https://webjike.com/upload/images/2018/4/df04ed962d511c9c.png",
-                "desc": "BUI是基于jQuery，兼容KISSY的UI类库，专致于解决后台系统的框架方案。"
             },
             {
                 "url": "http://sui.taobao.org/sui/docs/",
@@ -1106,12 +1088,6 @@
                 "title": "MFG Labs icon set",
                 "logo": "https://webjike.com/upload/images/2018/3/b5d08b70911c997e.png",
                 "desc": "免费字体图标"
-            },
-            {
-                "url": "",
-                "title": "Ligature Symbols",
-                "logo": "https://webjike.com/upload/images/2018/3/e20d9b61198e9b12.png",
-                "desc": "国外一个免费开源字体图标库。"
             }
         ]
     },
@@ -1136,12 +1112,6 @@
                 "title": "Webpack中文网",
                 "logo": "https://webjike.com/upload/images/2018/3/1ffbcba2a33da8ce.png",
                 "desc": "Webpack 是一个前端资源加载/打包工具，它将根据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源。"
-            },
-            {
-                "url": "",
-                "title": "Yeoman",
-                "logo": "https://webjike.com/upload/images/2018/3/6460bf2791072a40.png",
-                "desc": "Yeoman提供了自动化开发流程的一整套工具。"
             },
             {
                 "url": "https://fex-team.github.io/fis3/",
@@ -1390,12 +1360,6 @@
                 "desc": "Hogan是一个非常简单的模板引擎,可以把它理解成Mustuche语法的编译器。"
             },
             {
-                "url": "",
-                "title": "Nunjucks",
-                "logo": "https://webjike.com/upload/images/2018/3/392155e5e4dfc693.png",
-                "desc": "Nunjucks 是一个更复杂的 JavaScript 模板引擎，提供丰富的语言特性和块继承、自动转移、宏和异步控制等等。"
-            },
-            {
                 "url": "https://pugjs.org/api/getting-started.html",
                 "title": "Pug",
                 "logo": "https://webjike.com/upload/images/2018/5/820da0a408217999.png",
@@ -1546,12 +1510,6 @@
                 "desc": "Coding 是一个面向开发者的云端开发平台，目前提供代码托管，运行空间，质量控制，项目管理等功能。"
             },
             {
-                "url": "https://code.csdn.net/",
-                "title": "Code",
-                "logo": "https://webjike.com/upload/images/2018/4/95f068259e3d6eaa.png",
-                "desc": "CSDN是一个面向国内开发者提供代码托管、代码片、社交编程、组织管理、社区讨论、知识库等开发服务平台。"
-            },
-            {
                 "url": "http://git.oschina.net/",
                 "title": "码云",
                 "logo": "https://webjike.com/upload/images/2018/4/dc2f317b88f646c.jpg",
@@ -1624,22 +1582,10 @@
                 "desc": "Github Pages是Github免费提供给开发者的一款托管个人网站的产品。"
             },
             {
-                "url": "https://www.siteserver.cn/",
-                "title": "SiteServer CMS",
-                "logo": "https://webjike.com/upload/images/2018/5/380ab5e2ec13b2fa.png",
-                "desc": "中国.NET平台下最强大的企业级开源CMS系统，可免费用于商业用途。"
-            },
-            {
                 "url": "http://typecho.org/",
                 "title": "Typecho",
                 "logo": "https://webjike.com/upload/images/2018/5/97fc814d1842793a.png",
                 "desc": "一款内核强健﹑扩展方便﹑体验友好﹑运行流畅的轻量级开源博客程序。"
-            },
-            {
-                "url": "http://www.dedecms.com/",
-                "title": "织梦CMS",
-                "logo": "https://webjike.com/upload/images/2018/5/9be484de7dce1a0a.jpg",
-                "desc": "国内开源CMS的领先品牌，目前程序安装量已达七十万。"
             }
         ]
     },
@@ -1676,12 +1622,6 @@
                 "title": "开发工具箱",
                 "logo": "https://webjike.com/upload/images/2018/4/bc650e2cab59ea12.png",
                 "desc": "这个网站集合了各种工具，相信总有一款你用得上。"
-            },
-            {
-                "url": "http://www.mikecrm.com",
-                "title": "麦客CRM",
-                "logo": "https://webjike.com/upload/images/2018/4/f68e886d2b0b9962.jpg",
-                "desc": "麦客CRM是一款在线表单制作工具，同时也是强大的客户信息处理和关系管理系统。"
             },
             {
                 "url": "http://naotu.baidu.com/",

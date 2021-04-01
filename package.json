@@ -3,20 +3,25 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "nodemon server/index.js --wathc --open",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "consola": "^2.15.3",
     "core-js": "^3.9.1",
+    "koa": "^2.13.1",
+    "koa-router": "^10.0.0",
+    "mongoose": "^5.12.3",
     "nuxt": "^2.15.3",
     "view-design": "^4.5.0"
   },
   "devDependencies": {
     "cheerio": "^1.0.0-rc.5",
     "less": "^4.1.1",
+    "less-loader": "5.0.0",
     "node-fetch": "^2.6.1",
-    "less-loader": "5.0.0"
+    "nodemon": "^2.0.7"
   }
 }

@@ -1,15 +1,14 @@
 //hhttps://webjike.com/web.html
 const cheerio = require('cheerio');
 const fetch = require('node-fetch')
-const fs = require('fs')
+const { write } = require('./util')
 const path = require('path')
 
 String.prototype.replaceAll = function (str, str2) {
     return this.split(str).join(str2)
 }
 
-
-async function getHTML(url, frisrt = true) {
+async function getHTML(url) {
     let data = await fetch(url).then(res => (res.text()))
     let $ = cheerio.load(data);
     let arr = []
@@ -37,7 +36,5 @@ async function getHTML(url, frisrt = true) {
 
 
 getHTML('https://webjike.com/web.html').then(res => {
-    fs.writeFile(path.resolve(__dirname, '../static/mock/web.json'), JSON.stringify(res), function (err) {
-        if (err) console.log(err)
-    })
+    write(path.resolve(__dirname, '../static/mock/web.json'), JSON.stringify(res))
 })
