@@ -5,10 +5,11 @@ const routes = require('./routes')
 const app = new koa()
 
 const nuxt = new Nuxt(config)
-const builder = new Builder(nuxt);
-builder.build();
 
-console.log(config.dev)
+if (config.dev) {
+    const builder = new Builder(nuxt);
+    builder.build();
+}
 
 app
     .use(routes.api.routes())

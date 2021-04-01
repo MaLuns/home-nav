@@ -4,7 +4,7 @@ module.exports = {
   server: {
     port: 7000,
   },
-
+  dev: process.env.NODE_ENV !== 'production',
   env: {
     baseURL: "http://localhost:7000",
     port: 7000,

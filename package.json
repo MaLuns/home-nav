@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon server/index.js --wathc --open",
     "build": "nuxt build",
-    "start": "nuxt start",
+    "start": "NODE_ENV=production node server/index.js",
     "generate": "nuxt generate"
   },
   "dependencies": {
