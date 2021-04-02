@@ -9,10 +9,15 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "consola": "^2.15.3",
     "core-js": "^3.9.1",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^4.0.1",
     "koa-router": "^10.0.0",
+    "koa-validate": "^1.0.7",
     "mongoose": "^5.12.3",
     "nuxt": "^2.15.3",
     "view-design": "^4.5.0"

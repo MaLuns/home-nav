@@ -3,16 +3,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const schema = new Schema(
     {
-        title: String,
-        url: String,
-        sort: Number,
+        name: String,
+        password: String,
         delete: {
             type: Boolean,
-            default: false
-        },
-        blank: { // 
-            type: Boolean,
-            default: false
+            default: false,
         },
         createTime: {
             type: Date,
@@ -20,8 +15,8 @@ const schema = new Schema(
         },
     },
     {
-        collection: 'nav_info'
+        collection: 'user'
     }
 )
 
-module.exports = mongoose.model('Nav', schema)
+module.exports = mongoose.model('User', schema)

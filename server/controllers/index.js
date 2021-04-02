@@ -1,3 +1,5 @@
 module.exports = {
-    nav: require('./nav'),
+    UserController: require('./user'),
+    NavController: require('./nav'),
+    LinkClassController: require('./link_class')
 }

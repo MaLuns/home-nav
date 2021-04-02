@@ -2,7 +2,7 @@
     <header class="nav-container">
         <ul class="nav-container-content">
             <li v-for="(item,index) in nav" :key="index">
-                <NuxtLink :to="item.url" :class="{active:item.url===$route.path}">{{item.title}}</NuxtLink>
+                <NuxtLink :to="item.url ==='/'?'/':'/nav/'+item.url" :class="{active:(item.url ==='/'?'/':'/nav/'+item.url)===$route.path}">{{item.title}}</NuxtLink>
             </li>
             <li @click="handleOpen" class="switch-theme" :class="{active:isActive}"></li>
         </ul>
@@ -18,7 +18,7 @@
             };
         },
         async fetch() {
-            this.nav = await this.$mock("/mock/index-nav.json");
+            this.nav = await this.$mock("/api/nav");
         },
         methods: {
             handleOpen() {
@@ -64,7 +64,7 @@
                     &::after,
                     &::before {
                         position: absolute;
-                        content: "";
+                        content: '';
                         display: block;
                         width: 40px;
                         height: 1px;
@@ -131,7 +131,7 @@
                 transition: all 0.3s;
 
                 &::after {
-                    content: "";
+                    content: '';
                     width: 16px;
                     height: 16px;
                     background: var(--ion-color-step-800, #c9ccce);

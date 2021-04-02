@@ -8,7 +8,10 @@ module.exports = class NavProxy {
     }
 
     static find(query) {
-        return Nav.find(query, {})
+        return Nav.find(query, {
+            delete: 0,
+            __v: 0
+        })
     }
 
     static async findByTitle(title) {
@@ -19,7 +22,7 @@ module.exports = class NavProxy {
     }
 
     static async updateById(id, doc) {
-        return Nav.update({ _id: id }, { $set: doc })
+        return Nav.updateOne({ _id: id }, { $set: doc })
     }
 
 }
