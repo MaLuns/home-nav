@@ -9,7 +9,10 @@ const createAPI = (
     let config = {
         method,
         headers,
-        body: JSON.stringify(data)
+
+    }
+    if (['post', 'put'].includes(method)) {
+        config.body = JSON.stringify(data)
     }
     return fetch(
         '/api' + url,
@@ -38,7 +41,29 @@ const user = {
     add: data => createAPI('/user/add', 'post', data)
 }
 
+const nav = {
+    get: data => createAPI('/nav', 'get', data),
+    create: data => createAPI('/nav', 'post', data),
+    delete: data => createAPI('/nav', 'delete', data),
+    update: data => createAPI('/nav', 'put', data),
+}
 
+const linkclass = {
+    get: data => createAPI('/linkclass', 'get', data),
+    create: data => createAPI('/linkclass', 'post', data),
+    delete: data => createAPI('/linkclass', 'delete', data),
+    update: data => createAPI('/linkclass', 'put', data),
+}
+
+const link = {
+    get: data => createAPI('/link', 'get', data),
+    create: data => createAPI('/link', 'post', data),
+    delete: data => createAPI('/link', 'delete', data),
+    update: data => createAPI('/link', 'put', data),
+}
 export {
-    user
+    user,
+    nav,
+    link,
+    linkclass,
 }

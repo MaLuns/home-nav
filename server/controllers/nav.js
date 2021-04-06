@@ -33,4 +33,9 @@ module.exports = class NavController {
         console.log(ctx)
         ctx.body = 'xxx'
     }
+
+
+    static async update(ctx) {
+        ctx.body = 'xxx'
+    }
 }

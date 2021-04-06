@@ -1,13 +1,13 @@
 <template>
-    <div>
-        404
-    </div>
+    <div></div>
 </template>
 
 <script>
-export default {
-
-}
+    export default {
+        asyncData({ redirect }) {
+            return redirect("/");
+        },
+    };
 </script>
 
 <style>

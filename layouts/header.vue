@@ -22,26 +22,25 @@
         },
         created() {
             if (process.client) {
-                this.init()
+                this.init();
             }
         },
         methods: {
             init() {
-                this.$nextTick(() => {
-                    this.isActive = JSON.parse(window.localStorage.getItem('theme') || 'false')
-                    if (this.isActive) document.documentElement.classList.add("dark");
-                })
+                this.isActive = JSON.parse(
+                    window.localStorage.getItem("theme") || "false"
+                );
+                if (this.isActive) document.documentElement.classList.add("dark");
             },
             handleOpen() {
                 this.isActive = !this.isActive;
                 let classList = document.documentElement.classList;
                 if (this.isActive) {
-                    classList.add("dark")
+                    classList.add("dark");
+                } else {
+                    if (classList.contains("dark")) classList.remove("dark");
                 }
-                else {
-                    if (classList.contains("dark")) classList.remove("dark")
-                }
-                window.localStorage.setItem('theme', this.isActive)
+                window.localStorage.setItem("theme", this.isActive);
             },
         },
     };
@@ -80,7 +79,7 @@
                     &::after,
                     &::before {
                         position: absolute;
-                        content: '';
+                        content: "";
                         display: block;
                         width: 40px;
                         height: 1px;
@@ -147,7 +146,7 @@
                 transition: all 0.3s;
 
                 &::after {
-                    content: '';
+                    content: "";
                     width: 16px;
                     height: 16px;
                     background: var(--ion-color-step-800, #c9ccce);

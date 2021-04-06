@@ -6,9 +6,12 @@ exports.api = apiRoute
     .post('/user/login', UserController.login)
     .post('/user/add', UserController.add)
     .get('/user/init', UserController.init)
+
     .get('/nav', NavController.list)
-    .post('/nav/create', NavController.create)
+    .post('/nav', NavController.create)
     .delete('/nav', NavController.delete)
+    .put('/nav', NavController.update)
+
     .get('/linkclass', LinkClassController.list)
     .post('/linkclass/create', LinkClassController.create)
     .get('/linkclass/childen', LinkClassController.findByNavid)

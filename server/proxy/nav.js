@@ -11,6 +11,8 @@ module.exports = class NavProxy {
         return Nav.find(query, {
             delete: 0,
             __v: 0
+        }).sort({
+            sort: 1
         })
     }
 
