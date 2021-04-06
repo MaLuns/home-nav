@@ -6,7 +6,7 @@ module.exports = class NavController {
     static async list(ctx) {
         const keywords = ctx.query.keywords
         const url = ctx.query.url
-        let query = {};
+        let query = { delete: false };
         if (url) {
             query.url = url
         }

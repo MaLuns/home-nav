@@ -20,12 +20,28 @@
         async fetch() {
             this.nav = await this.$mock("/api/nav");
         },
+        created() {
+            if (process.client) {
+                this.init()
+            }
+        },
         methods: {
+            init() {
+                this.$nextTick(() => {
+                    this.isActive = JSON.parse(window.localStorage.getItem('theme') || 'false')
+                    if (this.isActive) document.documentElement.classList.add("dark");
+                })
+            },
             handleOpen() {
-                let classList = document.documentElement.classList;
-                if (classList.contains("dark")) classList.remove("dark");
-                else classList.add("dark");
                 this.isActive = !this.isActive;
+                let classList = document.documentElement.classList;
+                if (this.isActive) {
+                    classList.add("dark")
+                }
+                else {
+                    if (classList.contains("dark")) classList.remove("dark")
+                }
+                window.localStorage.setItem('theme', this.isActive)
             },
         },
     };

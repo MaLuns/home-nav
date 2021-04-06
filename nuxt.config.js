@@ -11,6 +11,8 @@ module.exports = {
     db: "mongodb://localhost/home-nav"
   },
 
+  loading: '~/components/loading.vue',
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: '导航',
