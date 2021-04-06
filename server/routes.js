@@ -3,8 +3,9 @@ const { NavController, LinkClassController, UserController } = require('./contro
 const apiRoute = new Router({ prefix: '/api' })
 
 exports.api = apiRoute
-    .post('/login', UserController.login)
-    .post('/user/update', UserController.add)
+    .post('/user/login', UserController.login)
+    .post('/user/add', UserController.add)
+    .get('/user/init', UserController.init)
     .get('/nav', NavController.list)
     .post('/nav/create', NavController.create)
     .delete('/nav', NavController.delete)

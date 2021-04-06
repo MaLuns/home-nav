@@ -3,7 +3,16 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        head: {
+            link: [
+                {
+                    rel: 'stylesheet',
+                    href: '//unpkg.com/view-design/dist/styles/iview.css'
+                }
+            ]
+        },
+    }
 </script>
 
 <style>
