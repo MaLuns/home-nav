@@ -15,13 +15,6 @@ module.exports = class NavProxy {
         })
     }
 
-    static async findByTitle(title) {
-        return Nav.findOne({ title }, {
-            _id: 0,
-            delete: 0
-        })
-    }
-
     static async updateById(id, doc) {
         return await Nav.updateOne({ _id: id }, { $set: doc }).catch(() => ({ ok: 0 }))
     }

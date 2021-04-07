@@ -29,7 +29,7 @@ module.exports = class Util {
     static objFilterKey(obj, keys = []) {
         let _obj = {}
         for (const key in obj) {
-            if (obj.hasOwnProperty(key) && keys.includes(key)) {
+            if (keys.includes(key)) {
                 _obj[key] = obj[key]
             }
         }

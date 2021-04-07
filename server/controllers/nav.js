@@ -33,10 +33,20 @@ module.exports = class NavController {
     }
 
     static async create(ctx) {
-        /* NavProxy.find({})
-        await NavProxy.newAndSave() */
-        console.log(ctx)
-        ctx.body = 'xxx'
+        const title = ctx.checkBody('title').notEmpty().value
+        const url = ctx.checkBody('url').notEmpty().value
+        if (ctx.errors) {
+            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+            return;
+        }
+        let nav = await NavProxy.find({ url })
+        if (nav.length > 0) {
+            ctx.body = ctx.util.resuccess('当前路径已存在')
+            return;
+        }
+        let par = uitl.objFilterKey(ctx.request.body, ['sort', 'blank'])
+        let res = await NavProxy.newAndSave({ title, url, ...par })
+        ctx.body = ctx.util.resuccess(res)
     }
 
 
@@ -47,6 +57,13 @@ module.exports = class NavController {
             return;
         }
         let par = uitl.objFilterKey(ctx.request.body, ['title', 'url', 'delete', 'sort', 'blank'])
+        if (par.url) {
+            let navs = await NavProxy.find({ url, _id: id })
+            if (navs.length > 0) {
+                ctx.body = ctx.util.resuccess('当前路径已存在')
+                return;
+            }
+        }
         let res = await NavProxy.updateById(id, par);
         if (res.ok) {
             ctx.body = ctx.util.resuccess('修改成功')

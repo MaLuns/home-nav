@@ -5,7 +5,7 @@
                 <ListItemMeta title="菜单列表"></ListItemMeta>
                 <template slot="action">
                     <li>
-                        <a>新增</a>
+                        <a @click="addShow=true;">新增</a>
                     </li>
                 </template>
             </ListItem>
@@ -23,12 +23,12 @@
                     更新时间: {{item.info.createTime}}
                 </template>
                 <template v-else>
-                    <Form ref="formInline" class="form" :model="item._deep" inline>
+                    <Form ref="formInline" class="form" :rules="ruleValidate" :model="item._deep" inline>
                         <FormItem prop="title">
-                            <Input type="text" v-model="item._deep.title" placeholder="请输入标题" />
+                            <Input type="text" v-model="item._deep.title" maxlength="10" placeholder="请输入标题" />
                         </FormItem>
                         <FormItem prop="url">
-                            <Input type="text" v-model="item._deep.url" placeholder="请输入地址" />
+                            <Input type="text" v-model="item._deep.url" placeholder="请输入地址" maxlength="15" />
                         </FormItem>
                         <FormItem prop="blank">
                             <i-switch size="large" v-model="item._deep.blank">
@@ -56,16 +56,29 @@
                 </template>
             </ListItem>
         </List>
-
+        <!-- 新增 -->
+        <add-nav v-if="addShow" :show.sync="addShow"></add-nav>
     </div>
 </template>
 
 <script>
+    import AddNav from './-components/addnav';
     import { nav } from "../../api";
+    import { regexp } from "~/pages/util";
+
     export default {
+        components: { AddNav },
         data() {
             return {
                 list: [],
+                addShow: false,
+                ruleValidate: {
+                    title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+                    url: [
+                        { required: true, message: '请输入路径', trigger: 'blur' },
+                        { message: '路径只能是"/"或者字母', trigger: 'blur', pattern: regexp.path },
+                    ]
+                }
             };
         },
         created() {

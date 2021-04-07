@@ -13,6 +13,8 @@ exports.api = apiRoute
     .put('/nav', NavController.update)
 
     .get('/linkclass', LinkClassController.list)
-    .post('/linkclass/create', LinkClassController.create)
+    .post('/linkclass', LinkClassController.create)
+    .delete('/linkclass', LinkClassController.delete)
+    .put('/linkclass', LinkClassController.update)
     .get('/linkclass/childen', LinkClassController.findByNavid)
 

@@ -2,7 +2,7 @@
     <header class="nav-container">
         <ul class="nav-container-content">
             <li v-for="(item,index) in nav" :key="index">
-                <NuxtLink :to="item.url ==='/'?'/':'/nav/'+item.url" :class="{active:(item.url ==='/'?'/':'/nav/'+item.url)===$route.path}">{{item.title}}</NuxtLink>
+                <NuxtLink :to="item.url ==='/'?'/':'/nav/'+item.url" :target="item.blank?'_blank':''" :class="{active:(item.url ==='/'?'/':'/nav/'+item.url)===$route.path}">{{item.title}}</NuxtLink>
             </li>
             <li @click="handleOpen" class="switch-theme" :class="{active:isActive}"></li>
         </ul>

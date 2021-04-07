@@ -36,20 +36,21 @@
 <style>
     .layout {
         position: relative;
-        overflow: hidden;
-        height: 100vh;
+        min-height: 100vh;
+        background: #fff;
     }
-    /*  .layout-logo {
-                width: 50px;
-                height: 50px;
-                background-image: url(/favicon.png);
-                background-size: 100%;
-                border-radius: 3px;
-                float: left;
-                position: relative;
-                top: 5px;
-                left: 0;
-            } */
+
+    .layout-logo {
+        width: 50px;
+        height: 50px;
+        /* background-image: url(/favicon.png); */
+        background-size: 100%;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 5px;
+        left: 0;
+    }
     .layout-nav {
         width: 420px;
         margin: 0 auto;

@@ -19,12 +19,11 @@ module.exports = class LinkClassProxy {
     }
 
     static async updateById(id, doc) {
-        return LinkClass.updateOne({ _id: id }, { $set: doc })
+        return await LinkClass.updateOne({ _id: id }, { $set: doc }).catch(() => ({ ok: 0 }))
     }
 
     static async findByNavid(id) {
         // let doc = await LinkClass.find({ navID: id });
-        console.log(id)
         return LinkClass.aggregate([
             {
                 $match: {
@@ -40,6 +39,5 @@ module.exports = class LinkClassProxy {
                 }
             }
         ])
-        //return doc;
     }
 }
