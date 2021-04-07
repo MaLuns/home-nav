@@ -1,3 +1,5 @@
+import iView from 'view-design';
+
 const createAPI = (
     url,
     method,
@@ -8,31 +10,44 @@ const createAPI = (
 ) => {
     let config = {
         method,
-        headers,
-
+        headers
     }
+
     if (['post', 'put'].includes(method)) {
         config.body = JSON.stringify(data)
-    }
-    return fetch(
-        '/api' + url,
-        config
-    ).then(res => {
-        let data = res.json()
-        if (data.success === false) {
-            if (data.code === 10001) {
-                body.data.forEach((date) => {
-                    iView.Notice.error({
-                        title: 'Error',
-                        desc: date[Object.keys(date)[0]]
-                    })
-                })
+    } else {
+        let str = ''
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                const element = data[key];
+                str += `${key}=${element}&`
             }
-            return Promise.reject(data)
-        } else {
-            return data;
         }
-    })
+        if (str.length > 0) url += "?" + str
+    }
+
+    return fetch('/api' + url, config)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success === false) {
+                if (data.code === 10001) {
+                    data.data.forEach((item) => {
+                        iView.Notice.error({
+                            title: '参数异常',
+                            desc: item[Object.keys(item)[0]]
+                        })
+                    })
+                } else if (data.code === -1) {
+                    iView.Notice.error({
+                        title: '结果',
+                        desc: data.message
+                    })
+                }
+                return Promise.reject(data)
+            } else {
+                return data;
+            }
+        })
 }
 
 

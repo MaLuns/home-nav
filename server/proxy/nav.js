@@ -9,7 +9,6 @@ module.exports = class NavProxy {
 
     static find(query) {
         return Nav.find(query, {
-            delete: 0,
             __v: 0
         }).sort({
             sort: 1
@@ -24,7 +23,7 @@ module.exports = class NavProxy {
     }
 
     static async updateById(id, doc) {
-        return Nav.updateOne({ _id: id }, { $set: doc })
+        return await Nav.updateOne({ _id: id }, { $set: doc }).catch(() => ({ ok: 0 }))
     }
 
 }

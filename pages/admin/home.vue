@@ -5,7 +5,7 @@
                 <div class="layout-logo"></div>
                 <div class="layout-nav">
                     <nuxt-link to="/admin/home/nav">
-                        <MenuItem name="/admin/home/nav">导航管理</MenuItem>
+                        <MenuItem name="/admin/home/nav">菜单管理</MenuItem>
                     </nuxt-link>
                     <nuxt-link to="/admin/home/class">
                         <MenuItem name="/admin/home/class">分类管理</MenuItem>
@@ -39,20 +39,21 @@
         overflow: hidden;
         height: 100vh;
     }
-    .layout-logo {
-        width: 100px;
-        height: 30px;
-        background: #5b6270;
-        border-radius: 3px;
-        float: left;
-        position: relative;
-        top: 15px;
-        left: 20px;
-    }
+    /*  .layout-logo {
+                width: 50px;
+                height: 50px;
+                background-image: url(/favicon.png);
+                background-size: 100%;
+                border-radius: 3px;
+                float: left;
+                position: relative;
+                top: 5px;
+                left: 0;
+            } */
     .layout-nav {
         width: 420px;
         margin: 0 auto;
-        margin-right: 20px;
+        margin-right: 0px;
     }
     .layout-footer-center {
         text-align: center;

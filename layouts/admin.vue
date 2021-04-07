@@ -8,7 +8,7 @@
             link: [
                 {
                     rel: "stylesheet",
-                    href: "//unpkg.com/view-design/dist/styles/iview.css",
+                    href: "/styles/iview.css",
                 },
             ],
         },

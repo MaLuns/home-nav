@@ -20,4 +20,19 @@ module.exports = class Util {
     static bcompare(str, hash) {
         return bcrypt.compareSync(str, hash)
     }
+
+    /**
+     * 过滤Object属性
+     * @param {*} obj 
+     * @param {*} keys 
+     */
+    static objFilterKey(obj, keys = []) {
+        let _obj = {}
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key) && keys.includes(key)) {
+                _obj[key] = obj[key]
+            }
+        }
+        return _obj;
+    }
 }
