@@ -43,11 +43,15 @@ module.exports = class LinkInfoProxy {
                         },
                         edit: 1,
                         delete: 1,
+                        logo: 1,
+                        url: 1,
                         desc: 1,
                         sort: 1,
                         title: 1,
-                        parentTitle: '$parent.title',
-                        count: { $size: '$children' }
+                        status: 1,
+                        remark: 1,
+                        submitInfo: 1,
+                        parentTitle: '$parent.title'
                     }
                 },
 

@@ -16,7 +16,6 @@ const createAPI = (
         method,
         headers
     }
-    console.log(iView)
     iView.LoadingBar.start();
     if (['post', 'put'].includes(method)) {
         config.body = JSON.stringify(data)

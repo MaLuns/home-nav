@@ -34,7 +34,7 @@
             </template>
         </i-table>
         <div class="text-right page">
-            <Page :total="count" :page-size="page.size" size="small" @on-page-size-change="e=>{page.size=e;getlist()}" :current.sync="page.index" @on-change="getlist()" show-total show-sizer />
+            <Page :total="count" :page-size-opts="pageSizeOpts" :page-size="page.size" size="small" @on-page-size-change="e=>{page.size=e;getlist()}" :current.sync="page.index" @on-change="getlist()" show-total show-sizer />
         </div>
         <!-- 新增 -->
         <add-class v-if="addShow" :show.sync="addShow"></add-class>
@@ -43,7 +43,7 @@
 
 <script>
     import AddClass from './-components/add_class';
-    import { link } from '~/pages/api';
+    import { linkclass } from '~/pages/api';
     import mixins from './mixins';
 
     export default {
@@ -55,10 +55,10 @@
                 addShow: false,
                 list: [],
                 columns: [
-                    { type: 'index', width: 50, align: 'center' },
-                    { title: '标题', slot: 'title' },
+                    { type: 'index', width: 55, align: 'center' },
+                    { title: '标题', slot: 'title', width: 260 },
                     { title: '描述', slot: 'desc' },
-                    { title: '菜单', slot: 'menu' },
+                    { title: '菜单', slot: 'menu', width: 100, align: 'center' },
                     { title: '链接数', slot: 'count', width: 100, align: 'center' },
                     { title: '排序', slot: 'sort', width: 120, align: 'center' },
                     { title: '创建时间', slot: 'createTime', width: 160, align: 'center' },

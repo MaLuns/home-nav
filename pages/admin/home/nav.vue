@@ -47,7 +47,7 @@
                         <Tag class="dot" type="dot" color="success" v-else></Tag>
                     </li>
                     <li>
-                        <a>配置分类</a>
+                        <a @click="addListShow=true;">配置分类</a>
                     </li>
                     <li>
                         <a @click="()=>{item._edit=true;item._deep={...item.info}}" v-if="!item._edit">编辑</a>
@@ -62,20 +62,23 @@
         </List>
         <!-- 新增 -->
         <add-nav v-if="addShow" :show.sync="addShow"></add-nav>
+        <class-list @change="handleClassChange" v-if="addListShow" :show.sync="addListShow"></class-list>
     </div>
 </template>
 
 <script>
     import AddNav from './-components/add_nav';
-    import { nav } from "~/pages/api";
+    import ClassList from './-components/class_list';
+    import { nav, linkclass } from "~/pages/api";
     import { regexp } from "~/pages/util";
 
     export default {
-        components: { AddNav },
+        components: { AddNav, ClassList },
         data() {
             return {
                 list: [],
                 addShow: false,
+                addListShow: false,
                 ruleValidate: {
                     title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
                     url: [
@@ -122,6 +125,9 @@
                     this.getlist();
                     this.$Message.success('修改成功');
                 })
+            },
+            handleClassChange(ids) {
+                linkclass.update(ids)
             }
         },
     };
@@ -145,6 +151,9 @@
             -moz-user-select: none;
             -ms-user-select: none;
             -webkit-user-select: none;
+            > li {
+                font-size: 12px;
+            }
         }
     }
 </style>

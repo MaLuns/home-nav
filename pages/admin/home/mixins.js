@@ -3,6 +3,7 @@ export default {
         return {
             maxheight: 0,
             count: 0,
+            pageSizeOpts: [20, 50, 100],
             page: {
                 size: 20,
                 index: 1

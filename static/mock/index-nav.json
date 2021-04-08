@@ -5,26 +5,26 @@
     },
     {
         "title": "导航",
-        "url": "/nav"
+        "url": "nav"
     },
     {
         "title": "设计",
-        "url": "/design"
+        "url": "design"
     },
     {
         "title": "壁纸",
-        "url": "/wallpaper"
+        "url": "wallpaper"
     },
     {
         "title": "热榜",
-        "url": "/hot"
+        "url": "hot"
     },
     {
         "title": "工具",
-        "url": "/tool"
+        "url": "tool"
     },
     {
         "title": "前端",
-        "url": "/web"
+        "url": "web"
     }
 ]

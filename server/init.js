@@ -10,22 +10,22 @@ function initNav() {
         })
         nav.save(function (err, doc) {
             switch (item.url) {
-                case '/nav':
+                case 'nav':
                     initLinkClass(doc, require('../static/mock/nav.json'))
                     break;
-                case '/design':
+                case 'design':
                     initLinkClass(doc, require('../static/mock/design.json'))
                     break;
-                case '/wallpaper':
+                case 'wallpaper':
                     initLinkClass(doc, require('../static/mock/wallpaper.json'))
                     break;
-                case '/hot':
+                case 'hot':
                     initLinkClass(doc, require('../static/mock/hot.json'))
                     break;
-                case '/tool':
+                case 'tool':
                     initLinkClass(doc, require('../static/mock/tool.json'))
                     break;
-                case '/web':
+                case 'web':
                     initLinkClass(doc, require('../static/mock/web.json'))
                     break;
                 default:
@@ -61,7 +61,8 @@ function initLinkInfo(id, arr) {
             url,
             desc,
             sort: index,
-            classID: id
+            classID: id,
+            status: 1
         })
         linkinfo.save(function (err, docs) {
             if (err)
@@ -71,3 +72,5 @@ function initLinkInfo(id, arr) {
         })
     })
 }
+
+initNav()

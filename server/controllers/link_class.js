@@ -1,5 +1,6 @@
 const { LinkClassProxy } = require('../proxy');
 const uitl = require('../util')
+const { Validator } = require('koa-validate')
 
 module.exports = class LinkClassController {
 
@@ -30,18 +31,25 @@ module.exports = class LinkClassController {
     }
 
     static async update(ctx) {
-        const id = ctx.checkBody('id').notEmpty().value
-        if (ctx.errors) {
-            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
-            return;
-        }
-        let par = uitl.objFilterKey(ctx.request.body, ['title', 'delete', 'sort', 'desc'])
+        if (Array.isArray(ctx.request.body)) {
+            array.forEach(element => {
 
-        let res = await LinkClassProxy.updateById(id, par);
-        if (res.ok) {
-            ctx.body = ctx.util.resuccess('修改成功')
+            });
+            ctx.checkBody('id').notEmpty()
         } else {
-            ctx.body = ctx.util.refail('修改失败')
+            const id = ctx.checkBody('id').notEmpty().value
+            if (ctx.errors) {
+                ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+                return;
+            }
+            let par = uitl.objFilterKey(ctx.request.body, ['title', 'delete', 'sort', 'desc'])
+
+            let res = await LinkClassProxy.updateById(id, par);
+            if (res.ok) {
+                ctx.body = ctx.util.resuccess('修改成功')
+            } else {
+                ctx.body = ctx.util.refail('修改失败')
+            }
         }
     }
 

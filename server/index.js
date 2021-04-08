@@ -8,6 +8,25 @@ const middlewares = require('./middlewares')
 const app = new koa()
 const nuxt = new Nuxt(config)
 require('koa-validate')(app)
+/* const { Validator } = require('koa-validate')
+
+~(function () {
+    app.context.checkBodyArr = function (key, transFn) {
+        var body = this.request.body;
+        if (!body) {
+            if (!this.errors) {
+                this.errors = ['no body to check!'];
+            }
+            return new Validator(this, null, null, false, null, false);
+        }
+        // 数组
+        let arr = []
+        body.forEach(item => {
+            arr.push(new Validator(this, key, getValue(item, key, transFn), hasKey(item, key, transFn), item));
+        });
+        console.log(arr)
+    }
+})() */
 
 const start = async () => {
     if (config.dev) {

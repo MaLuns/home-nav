@@ -3,18 +3,17 @@
         <div class="text-right mgb10">
             <Button @click="addShow=true;" type="dashed">新增</Button>
         </div>
-        <i-table :loading="loading" ref="table" border size="small" :columns="columns" :data="list" :height="maxheight">
+        <i-table row-key="_id" stripe :loading="loading" ref="table" border size="small" :columns="columns" :data="list" :height="maxheight">
             <template slot-scope="{ row }" slot="title">
                 <Input v-if="row.edit" type="text" v-model="row.title" maxlength="10" placeholder="标题" />
                 <template v-else>
                     {{ row.title }}
                 </template>
             </template>
-            <template slot-scope="{ row }" slot="desc">
+            <!-- <template slot-scope="{ row }" slot="desc">
                 <Input v-if="row.edit" type="text" v-model="row.desc" maxlength="20" placeholder="描述" />
-                <span v-else>{{ row.desc }}</span> </template>
-            <template slot-scope="{ row }" slot="menu"> {{ row.parentTitle }} </template>
-            <template slot-scope="{ row }" slot="count"> {{ row.count }} </template>
+                <template v-else>{{ row.desc }}</template>
+            </template> -->
             <template slot-scope="{ row }" slot="sort">
                 <InputNumber v-if="row.edit" :max="100000" :min="1" v-model="row.sort"></InputNumber>
                 <span v-else> {{ row.sort }}</span>
@@ -24,8 +23,6 @@
                 <Tag class="dot" type="dot" color="error" v-if="row.delete"></Tag>
                 <Tag class="dot" type="dot" color="success" v-else></Tag>
                 <Divider type="vertical" />
-                <a>配置网址</a>
-                <Divider type="vertical" />
                 <a @click="()=>{row.edit=true}" v-if="!row.edit">编辑</a>
                 <a @click="handleSave(row)" v-else>保存</a>
                 <Divider type="vertical" />
@@ -34,7 +31,7 @@
             </template>
         </i-table>
         <div class="text-right page">
-            <Page :total="count" :page-size="page.size" size="small" @on-page-size-change="e=>{page.size=e;getlist()}" :current.sync="page.index" @on-change="getlist()" show-total show-sizer />
+            <Page :total="count" :page-size-opts="pageSizeOpts" :page-size="page.size" size="small" @on-page-size-change="e=>{page.size=e;getlist()}" :current.sync="page.index" @on-change="getlist()" show-total show-sizer />
         </div>
         <!-- 新增 -->
         <add-class v-if="addShow" :show.sync="addShow"></add-class>
@@ -55,14 +52,18 @@
                 addShow: false,
                 list: [],
                 columns: [
-                    { type: 'index', width: 50, align: 'center' },
-                    { title: '标题', slot: 'title' },
-                    { title: '描述', slot: 'desc' },
-                    { title: '菜单', slot: 'menu' },
-                    { title: '链接数', slot: 'count', width: 100, align: 'center' },
-                    { title: '排序', slot: 'sort', width: 120, align: 'center' },
+                    { type: 'index', width: 55, align: 'center' },
+                    { title: '标题', slot: 'title', ellipsis: true, tooltip: true },
+                    { title: '描述', key: 'desc', ellipsis: true, tooltip: true },
+                    { title: 'url', key: 'url', ellipsis: true, tooltip: true },
+                    { title: 'logo', key: 'logo', ellipsis: true, tooltip: true },
+                    { title: '备注', key: 'remark', ellipsis: true, tooltip: true },
+                    { title: '分类', key: 'parentTitle', width: 120, align: 'center' },
+                    { title: '排序', slot: 'sort', width: 80, align: 'center' },
+                    { title: '状态', key: 'status', width: 80, align: 'center' },
                     { title: '创建时间', slot: 'createTime', width: 160, align: 'center' },
-                    { title: '操作', slot: 'opt', width: 240, align: 'center' }
+                    { title: '申请信息', key: '状态', width: 120, align: 'center' },
+                    { title: '操作', slot: 'opt', width: 180, align: 'center' }
                 ],
             };
         },

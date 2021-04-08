@@ -12,6 +12,11 @@ const schema = new Schema(
             type: mongoose.Types.ObjectId,
             ref: "link_class"
         },
+        status: {
+            type: Number,
+            default: 0 //0 停用 1 启用
+        },
+        remark: String,
         delete: {
             type: Boolean,
             default: false
@@ -19,6 +24,9 @@ const schema = new Schema(
         createTime: {
             type: Date,
             default: Date.now
+        },
+        submitInfo: {
+            type: Object
         }
     },
     {
