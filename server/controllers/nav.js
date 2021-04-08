@@ -25,10 +25,12 @@ module.exports = class NavController {
     }
 
     static async delete(ctx) {
-        const id = ctx.query.id
-        let ope = await NavProxy.updateById(id, {
-            delete: true
-        })
+        const id = ctx.checkQuery('id').notEmpty().value
+        if (ctx.errors) {
+            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+            return;
+        }
+        let ope = await NavProxy.updateById(id, { delete: true })
         ctx.body = ope
     }
 

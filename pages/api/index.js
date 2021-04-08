@@ -1,5 +1,9 @@
 import iView from 'view-design';
 
+iView.LoadingBar.config({
+    height: 3
+});
+
 const createAPI = (
     url,
     method,
@@ -12,7 +16,8 @@ const createAPI = (
         method,
         headers
     }
-
+    console.log(iView)
+    iView.LoadingBar.start();
     if (['post', 'put'].includes(method)) {
         config.body = JSON.stringify(data)
     } else {
@@ -29,6 +34,7 @@ const createAPI = (
     return fetch('/api' + url, config)
         .then(res => res.json())
         .then(data => {
+            iView.LoadingBar.finish();
             if (data.success === false) {
                 if (data.code === 10001) {
                     data.data.forEach((item) => {

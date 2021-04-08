@@ -5,16 +5,16 @@
                 <ListItemMeta title="菜单列表"></ListItemMeta>
                 <template slot="action">
                     <li>
-                        <a @click="addShow=true;">新增</a>
+                        <Button @click="addShow=true;" type="dashed">新增</Button>
                     </li>
                 </template>
             </ListItem>
             <ListItem v-for="item in list" :key="item.info._id">
                 <ListItemMeta :title="item.info.title" :description="'路径: '+ item.info.url">
-                    <template slot="avatar">
+                    <!--  <template slot="avatar">
                         <Tag class="dot" type="dot" color="error" v-if="item.info.delete"></Tag>
                         <Tag class="dot" type="dot" color="success" v-else></Tag>
-                    </template>
+                    </template> -->
                 </ListItemMeta>
                 <template v-if="!item._edit">
                     外部打开: {{ item.info.blank}}
@@ -43,6 +43,10 @@
                 </template>
                 <template slot="action" class="action">
                     <li>
+                        <Tag class="dot" type="dot" color="error" v-if="item.info.delete"></Tag>
+                        <Tag class="dot" type="dot" color="success" v-else></Tag>
+                    </li>
+                    <li>
                         <a>配置分类</a>
                     </li>
                     <li>
@@ -62,8 +66,8 @@
 </template>
 
 <script>
-    import AddNav from './-components/addnav';
-    import { nav } from "../../api";
+    import AddNav from './-components/add_nav';
+    import { nav } from "~/pages/api";
     import { regexp } from "~/pages/util";
 
     export default {

@@ -7,8 +7,65 @@ module.exports = class LinkClassProxy {
         return linkclass.save()
     }
 
-    static find(query) {
-        return LinkClass.find(query, {})
+    static async find(query = {}, pages = {}) {
+        if (pages.index && pages.size) {
+            let count = await LinkClass.countDocuments(query)
+            let list = await LinkClass.aggregate([
+                { $match: query },
+                { $skip: (pages.index - 1) * pages.size },
+                { $limit: pages.size },
+                {
+                    $lookup: {
+                        from: 'link_info',
+                        localField: "_id", // link_class 表关联的字段
+                        foreignField: "classID", // link_info 表关联的字段
+                        as: 'children'
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'nav_info',
+                        localField: "navID", // link_class 表关联的字段
+                        foreignField: "_id", // nav_info 表关联的字段
+                        as: 'parent'
+                    }
+                },
+                {
+                    $unwind: { //
+                        path: "$parent",
+                        preserveNullAndEmptyArrays: true
+                    }
+                },
+                {
+                    $addFields: {
+                        edit: false
+                    }
+                },
+                {
+                    $project: {
+                        createTime: {
+                            $dateToString: {
+                                format: "%Y-%m-%d %H:%M:%S", date: "$createTime"
+                            }
+                        },
+                        edit: 1,
+                        delete: 1,
+                        desc: 1,
+                        sort: 1,
+                        title: 1,
+                        parentTitle: '$parent.title',
+                        count: { $size: '$children' }
+                    }
+                },
+
+            ])
+            return {
+                count,
+                list
+            }
+        } else {
+            return LinkClass.find(query, {})
+        }
     }
 
     static async findByTitle(title) {
@@ -23,7 +80,6 @@ module.exports = class LinkClassProxy {
     }
 
     static async findByNavid(id) {
-        // let doc = await LinkClass.find({ navID: id });
         return LinkClass.aggregate([
             {
                 $match: {

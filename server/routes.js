@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const { NavController, LinkClassController, UserController } = require('./controllers')
+const { NavController, LinkClassController, UserController, LinkController } = require('./controllers')
 const apiRoute = new Router({ prefix: '/api' })
 
 exports.api = apiRoute
@@ -18,3 +18,7 @@ exports.api = apiRoute
     .put('/linkclass', LinkClassController.update)
     .get('/linkclass/childen', LinkClassController.findByNavid)
 
+    .get('/link', LinkController.list)
+    .post('/link', LinkController.create)
+    .delete('/link', LinkController.delete)
+    .put('/link', LinkController.update)

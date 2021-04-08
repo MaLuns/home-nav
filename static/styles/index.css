@@ -419,3 +419,19 @@ pre,
 samp {
     font-family: Consolas, Menlo, Courier, monospace
 }
+
+.mgb10 {
+    margin-bottom: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.page {
+    padding-top: 10px;
+}

@@ -7,8 +7,58 @@ module.exports = class LinkInfoProxy {
         return linkinfo.save()
     }
 
-    static find(query) {
-        return LinkInfo.find(query, {})
+    static async find(query, pages) {
+        console.log(pages)
+        if (pages.index && pages.size) {
+            let count = await LinkInfo.countDocuments(query)
+            let list = await LinkInfo.aggregate([
+                { $match: query },
+                { $skip: (pages.index - 1) * pages.size },
+                { $limit: pages.size },
+                {
+                    $lookup: {
+                        foreignField: "_id",
+                        from: 'link_class',
+                        localField: "classID",
+                        as: 'parent'
+                    }
+                },
+                {
+                    $unwind: { //
+                        path: "$parent",
+                        preserveNullAndEmptyArrays: true
+                    }
+                },
+                {
+                    $addFields: {
+                        edit: false
+                    }
+                },
+                {
+                    $project: {
+                        createTime: {
+                            $dateToString: {
+                                format: "%Y-%m-%d %H:%M:%S", date: "$createTime"
+                            }
+                        },
+                        edit: 1,
+                        delete: 1,
+                        desc: 1,
+                        sort: 1,
+                        title: 1,
+                        parentTitle: '$parent.title',
+                        count: { $size: '$children' }
+                    }
+                },
+
+            ])
+            return {
+                count,
+                list
+            }
+        } else {
+            return LinkInfo.find(query, {})
+        }
     }
 
     static async findByTitle(title) {

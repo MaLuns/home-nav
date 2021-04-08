@@ -35,4 +35,24 @@ module.exports = class Util {
         }
         return _obj;
     }
+
+    /**
+     * 生成MongoDB模糊查询
+     * @param {*} obj 
+     * @param {*} page-key 
+     */
+    static parameterGeneration(obj, pages = ['size', 'index']) {
+        let query = {}
+        let page = {}
+        for (const key in obj) {
+            if (pages.includes(key)) {
+                page[key] = parseInt(obj[key])
+            } else {
+                query[key] = {
+                    $regex: obj[key], $options: 'i'
+                }
+            }
+        }
+        return [query, page];
+    }
 }

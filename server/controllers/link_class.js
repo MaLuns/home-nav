@@ -4,18 +4,21 @@ const uitl = require('../util')
 module.exports = class LinkClassController {
 
     static async list(ctx) {
-        let par = uitl.objFilterKey(ctx.query, ['keywords', 'size', 'index'])
-        let query = par.keywords ? {
-            title: {
-                $regex: keywords, $options: 'i'
-            }
-        } : {}
-        let nav = await LinkClassProxy.find(query).skip(1).limit(10)
+        let par = uitl.objFilterKey(ctx.query, ['title', 'desc', 'size', 'index'])
+        let query = uitl.parameterGeneration(par)
+        let nav = await LinkClassProxy.find(...query)
         ctx.body = nav
     }
 
     static async create(ctx) {
-        ctx.body = 'xxx'
+        const title = ctx.checkBody('title').notEmpty().value
+        if (ctx.errors) {
+            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+            return;
+        }
+        let par = uitl.objFilterKey(ctx.request.body, ['sort', 'desc'])
+        let res = await LinkClassProxy.newAndSave({ title, ...par })
+        ctx.body = ctx.util.resuccess(res)
     }
 
     static async delete(ctx) {
@@ -27,11 +30,27 @@ module.exports = class LinkClassController {
     }
 
     static async update(ctx) {
+        const id = ctx.checkBody('id').notEmpty().value
+        if (ctx.errors) {
+            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+            return;
+        }
+        let par = uitl.objFilterKey(ctx.request.body, ['title', 'delete', 'sort', 'desc'])
 
+        let res = await LinkClassProxy.updateById(id, par);
+        if (res.ok) {
+            ctx.body = ctx.util.resuccess('修改成功')
+        } else {
+            ctx.body = ctx.util.refail('修改失败')
+        }
     }
 
     static async findByNavid(ctx) {
-        const id = ctx.query.id
+        const id = ctx.checkQuery('id').notEmpty().value
+        if (ctx.errors) {
+            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+            return;
+        }
         let list = await LinkClassProxy.findByNavid(id);
         ctx.body = list;
     }
