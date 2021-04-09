@@ -35,7 +35,7 @@
             </ListItem>
         </List>
         <!-- 新增 -->
-        <add-nav v-if="update.show" :show.sync="update.show" :type="update.type" :data="update.data"></add-nav>
+        <add-nav @change="getlist" v-if="update.show" :show.sync="update.show" :type="update.type" :data="update.data"></add-nav>
         <class-list @change="handleClassChange" v-if="addListShow" :show.sync="addListShow"></class-list>
     </div>
 </template>

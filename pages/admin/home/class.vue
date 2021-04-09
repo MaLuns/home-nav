@@ -1,43 +1,25 @@
 <template>
     <div>
         <div class="text-right mgb10">
-            <Button @click="addShow=true;" type="dashed">新增</Button>
+            <Button @click="handleUpdate('create')" type="dashed">新增</Button>
         </div>
         <i-table :loading="loading" ref="table" border size="small" :columns="columns" :data="list" :height="maxheight">
-            <template slot-scope="{ row }" slot="title">
-                <Input v-if="row.edit" type="text" v-model="row.title" maxlength="10" placeholder="标题" />
-                <template v-else>
-                    {{ row.title }}
-                </template>
-            </template>
-            <template slot-scope="{ row }" slot="desc">
-                <Input v-if="row.edit" type="text" v-model="row.desc" maxlength="20" placeholder="描述" />
-                <span v-else>{{ row.desc }}</span> </template>
-            <template slot-scope="{ row }" slot="menu"> {{ row.parentTitle }} </template>
-            <template slot-scope="{ row }" slot="count"> {{ row.count }} </template>
-            <template slot-scope="{ row }" slot="sort">
-                <InputNumber v-if="row.edit" :max="100000" :min="1" v-model="row.sort"></InputNumber>
-                <span v-else> {{ row.sort }}</span>
-            </template>
-            <template slot-scope="{ row }" slot="createTime"> {{ row.createTime }} </template>
             <template slot-scope="{ row }" slot="opt">
                 <Tag class="dot" type="dot" color="error" v-if="row.delete"></Tag>
                 <Tag class="dot" type="dot" color="success" v-else></Tag>
                 <Divider type="vertical" />
                 <a @click="handleSet(row)">配置网址</a>
                 <Divider type="vertical" />
-                <a @click="()=>{row.edit=true}" v-if="!row.edit">编辑</a>
-                <a @click="handleSave(row)" v-else>保存</a>
+                <a @click="handleUpdate('update',row)">编辑</a>
                 <Divider type="vertical" />
-                <a @click="handleUpdateState(row)" v-if="!row.edit">{{row.delete?'启用':'停用'}}</a>
-                <a @click="row.edit=false" v-else>取消</a>
+                <a @click="handleUpdateState(row)">{{row.delete?'启用':'停用'}}</a>
             </template>
         </i-table>
         <div class="text-right page">
             <Page :total="count" :page-size-opts="pageSizeOpts" :page-size="page.size" size="small" @on-page-size-change="e=>{page.size=e;getlist()}" :current.sync="page.index" @on-change="getlist()" show-total show-sizer />
         </div>
         <!-- 新增 -->
-        <add-class v-if="addShow" :show.sync="addShow"></add-class>
+        <add-class @change="getlist" v-if="update.show" :show.sync="update.show" :type="update.type" :data="update.data"></add-class>
         <link-list @change="handleLinkChange" v-if="addListShow" :show.sync="addListShow"></link-list>
     </div>
 </template>
@@ -45,7 +27,7 @@
 <script>
     import AddClass from './-components/add_class';
     import LinkList from './-components/link_list';
-    import { linkclass } from '~/pages/api';
+    import { linkclass, link } from '~/pages/api';
     import mixins from './mixins';
 
     export default {
@@ -54,16 +36,20 @@
         data() {
             return {
                 loading: true,
-                addShow: false,
+                update: {
+                    show: false,
+                    type: 'add',
+                    data: {}
+                },
                 list: [],
                 columns: [
                     { type: 'index', width: 55, align: 'center' },
-                    { title: '标题', slot: 'title', width: 260 },
-                    { title: '描述', slot: 'desc' },
-                    { title: '菜单', slot: 'menu', width: 100, align: 'center' },
-                    { title: '链接数', slot: 'count', width: 100, align: 'center' },
-                    { title: '排序', slot: 'sort', width: 120, align: 'center' },
-                    { title: '创建时间', slot: 'createTime', width: 160, align: 'center' },
+                    { title: '标题', key: 'title', width: 260 },
+                    { title: '描述', key: 'desc' },
+                    { title: '菜单', key: 'menu', width: 100, align: 'center' },
+                    { title: '链接数', key: 'count', width: 100, align: 'center' },
+                    { title: '排序', key: 'sort', width: 120, align: 'center' },
+                    { title: '创建时间', key: 'createTime', width: 160, align: 'center' },
                     { title: '操作', slot: 'opt', width: 240, align: 'center' }
                 ],
                 addListShow: false,
@@ -75,6 +61,11 @@
             }
         },
         methods: {
+            handleUpdate(type, data = {}) {
+                this.update.data = { ...data }
+                this.update.type = type;
+                this.update.show = true;
+            },
             handleSet(row) {
                 this.currentRow = row
                 this.addListShow = true
@@ -89,14 +80,6 @@
                         this.loading = false;
                     });
             },
-            handleSave({ _id: id, desc, title, sort }) {
-                linkclass
-                    .update({ id, desc, title, sort })
-                    .then(res => {
-                        this.getlist();
-                        this.$Message.success('保存成功');
-                    });
-            },
             handleUpdateState(item) {
                 linkclass
                     .update({
@@ -108,8 +91,13 @@
                         this.$Message.success('修改成功');
                     });
             },
-            handleLinkChange() {
-
+            handleLinkChange(ids) {
+                link.update({
+                    classID: this.currentRow._id,
+                    ids
+                }).then(res => {
+                    this.$Message.success('配置成功');
+                })
             }
         }
     };

@@ -41,6 +41,22 @@
                 required: true,
                 default: false
             },
+            type: {
+                type: String,
+                default: 'create',
+            },
+            data: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            }
+        },
+        created() {
+            this.formValidate = {
+                ...this.formValidate,
+                ...this.data
+            }
         },
         computed: {
             shows: {
@@ -56,8 +72,9 @@
             handleSubmit() {
                 this.$refs.formValidate.validate((valid) => {
                     if (valid) {
-                        linkclass.create({
-                            ...this.formValidate
+                        let { _id: id, desc, title, sort } = this.formValidate
+                        linkclass[this.type]({
+                            id, desc, title, sort
                         }).then(res => {
                             this.$emit('change')
                             this.shows = false

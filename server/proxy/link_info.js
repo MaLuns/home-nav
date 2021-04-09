@@ -1,4 +1,5 @@
 const { LinkInfo } = require('../models');
+const { ObjectID } = require('mongodb')
 
 module.exports = class LinkInfoProxy {
 
@@ -74,5 +75,18 @@ module.exports = class LinkInfoProxy {
 
     static async updateById(id, doc) {
         return LinkInfo.updateOne({ _id: id }, { $set: doc })
+    }
+
+
+    static async updateManyByIds(ids = [], doc) {
+        var _ids = ids.map(id => ObjectID(id))
+        return await LinkInfo.updateMany(
+            {
+                _id: { $in: _ids }
+            },
+            {
+                $set: doc
+            }
+        )
     }
 }

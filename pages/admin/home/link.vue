@@ -1,67 +1,54 @@
 <template>
     <div>
         <div class="text-right mgb10">
-            <Button @click="addShow=true;" type="dashed">新增</Button>
+            <Button @click="handleUpdate('create')" type="dashed">新增</Button>
         </div>
         <i-table row-key="_id" stripe :loading="loading" ref="table" border size="small" :columns="columns" :data="list" :height="maxheight">
-            <template slot-scope="{ row }" slot="title">
-                <Input v-if="row.edit" type="text" v-model="row.title" maxlength="10" placeholder="标题" />
-                <template v-else>
-                    {{ row.title }}
-                </template>
-            </template>
-            <!-- <template slot-scope="{ row }" slot="desc">
-                <Input v-if="row.edit" type="text" v-model="row.desc" maxlength="20" placeholder="描述" />
-                <template v-else>{{ row.desc }}</template>
-            </template> -->
-            <template slot-scope="{ row }" slot="sort">
-                <InputNumber v-if="row.edit" :max="100000" :min="1" v-model="row.sort"></InputNumber>
-                <span v-else> {{ row.sort }}</span>
-            </template>
-            <template slot-scope="{ row }" slot="createTime"> {{ row.createTime }} </template>
             <template slot-scope="{ row }" slot="opt">
                 <Tag class="dot" type="dot" color="error" v-if="row.delete"></Tag>
                 <Tag class="dot" type="dot" color="success" v-else></Tag>
                 <Divider type="vertical" />
-                <a @click="()=>{row.edit=true}" v-if="!row.edit">编辑</a>
-                <a @click="handleSave(row)" v-else>保存</a>
+                <a @click="handleUpdate('update',row)">编辑</a>
                 <Divider type="vertical" />
-                <a @click="handleUpdateState(row)" v-if="!row.edit">{{row.delete?'启用':'停用'}}</a>
-                <a @click="row.edit=false" v-else>取消</a>
+                <a @click="handleUpdateState(row)">{{row.delete?'启用':'停用'}}</a>
             </template>
         </i-table>
         <div class="text-right page">
             <Page :total="count" :page-size-opts="pageSizeOpts" :page-size="page.size" size="small" @on-page-size-change="e=>{page.size=e;getlist()}" :current.sync="page.index" @on-change="getlist()" show-total show-sizer />
         </div>
         <!-- 新增 -->
-        <add-class v-if="addShow" :show.sync="addShow"></add-class>
+        <add-link @change="getlist" v-if="update.show" :show.sync="update.show" :type="update.type" :data="update.data"></add-link>
     </div>
 </template>
 
 <script>
-    import AddClass from './-components/add_class';
+    import AddLink from './-components/add_link';
     import { link } from '~/pages/api';
     import mixins from './mixins';
 
     export default {
         mixins: [mixins],
-        components: { AddClass },
+        components: { AddLink },
         data() {
             return {
                 loading: true,
-                addShow: false,
+                update: {
+                    show: false,
+                    type: 'add',
+                    data: {}
+                },
                 list: [],
                 columns: [
                     { type: 'index', width: 55, align: 'center' },
-                    { title: '标题', slot: 'title', ellipsis: true, tooltip: true },
+                    { title: '标题', key: 'title', ellipsis: true, tooltip: true },
                     { title: '描述', key: 'desc', ellipsis: true, tooltip: true },
                     { title: 'url', key: 'url', ellipsis: true, tooltip: true },
                     { title: 'logo', key: 'logo', ellipsis: true, tooltip: true },
                     { title: '备注', key: 'remark', ellipsis: true, tooltip: true },
                     { title: '分类', key: 'parentTitle', width: 120, align: 'center' },
-                    { title: '排序', slot: 'sort', width: 80, align: 'center' },
+                    { title: '排序', key: 'sort', width: 80, align: 'center' },
                     { title: '状态', key: 'status', width: 80, align: 'center' },
-                    { title: '创建时间', slot: 'createTime', width: 160, align: 'center' },
+                    { title: '创建时间', key: 'createTime', width: 160, align: 'center' },
                     { title: '申请信息', key: '状态', width: 120, align: 'center' },
                     { title: '操作', slot: 'opt', width: 180, align: 'center' }
                 ],
@@ -82,12 +69,10 @@
                         this.loading = false;
                     });
             },
-            handleSave({ _id: id, desc, title, sort }) {
-                link.update({ id, desc, title, sort })
-                    .then(res => {
-                        this.getlist();
-                        this.$Message.success('保存成功');
-                    });
+            handleUpdate(type, data = {}) {
+                this.update.data = { ...data }
+                this.update.type = type;
+                this.update.show = true;
             },
             handleUpdateState(item) {
                 link.update({

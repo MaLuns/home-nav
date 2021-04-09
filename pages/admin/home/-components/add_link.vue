@@ -1,0 +1,107 @@
+<template>
+    <div>
+        <Modal v-model="shows" title="新增菜单" @on-ok="handleSubmit">
+            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+                <FormItem label="名称" prop="title">
+                    <Input v-model="formValidate.title" placeholder="名称" maxlength="10" />
+                </FormItem>
+                <FormItem label="url" prop="url">
+                    <Input v-model="formValidate.url" placeholder="地址" maxlength="100" />
+                </FormItem>
+                <FormItem label="logo" prop="logo">
+                    <Input v-model="formValidate.logo" placeholder="图标地址" maxlength="100" />
+                </FormItem>
+                <FormItem label="描述" prop="desc">
+                    <Input v-model="formValidate.desc" placeholder="描述" maxlength="15" />
+                </FormItem>
+                <FormItem label="排序" prop="sort">
+                    <InputNumber style="width:100%" :max="100000" :min="1" v-model="formValidate.sort"></InputNumber>
+                </FormItem>
+            </Form>
+            <div slot="footer">
+                <Button type="primary" @click="handleSubmit">确定</Button>
+            </div>
+        </Modal>
+    </div>
+</template>
+
+<script>
+    import { link } from "~/pages/api";
+    import { regexp } from "~/pages/util";
+
+    export default {
+        data() {
+            return {
+                formValidate: {
+                    desc: '',
+                    logo: '',
+                    url: '',
+                    title: '',
+                    sort: 0
+                },
+                ruleValidate: {
+                    title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+                    url: [
+                        { required: true, message: '请输入路径', trigger: 'blur' },
+                        { message: '请输入网址', trigger: 'blur', pattern: regexp.url },
+                    ],
+                    logo: [
+                        { required: true, message: '请输入路径', trigger: 'blur' },
+                        { message: '请输入图片在线链接', trigger: 'blur', pattern: regexp.url },
+                    ]
+                }
+            }
+        },
+        props: {
+            show: {
+                type: Boolean,
+                required: true,
+                default: false
+            },
+            type: {
+                type: String,
+                default: 'create',
+            },
+            data: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            }
+        },
+        created() {
+            this.formValidate = {
+                ...this.formValidate,
+                ...this.data
+            }
+        },
+        computed: {
+            shows: {
+                get() {
+                    return this.show;
+                },
+                set(newValue) {
+                    this.$emit('update:show', newValue);
+                }
+            }
+        },
+        methods: {
+            handleSubmit() {
+                this.$refs.formValidate.validate((valid) => {
+                    if (valid) {
+                        let { _id: id, desc, logo, url, title, sort } = this.formValidate
+                        link[this.type]({
+                            id, desc, title, sort, logo, url
+                        }).then(res => {
+                            this.$emit('change')
+                            this.shows = false
+                        })
+                    }
+                })
+            }
+        }
+    }
+</script>
+
+<style>
+</style>
