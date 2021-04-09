@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const { NavController, LinkClassController, UserController, LinkController } = require('./controllers')
+const { NavController, LinkClassController, UserController, LinkController, CountController } = require('./controllers')
 const apiRoute = new Router({ prefix: '/api' })
 
 exports.api = apiRoute
@@ -22,3 +22,5 @@ exports.api = apiRoute
     .post('/link', LinkController.create)
     .delete('/link', LinkController.delete)
     .put('/link', LinkController.update)
+
+    .put('/count', CountController.add)

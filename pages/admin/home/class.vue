@@ -24,7 +24,7 @@
                 <Tag class="dot" type="dot" color="error" v-if="row.delete"></Tag>
                 <Tag class="dot" type="dot" color="success" v-else></Tag>
                 <Divider type="vertical" />
-                <a>配置网址</a>
+                <a @click="handleSet(row)">配置网址</a>
                 <Divider type="vertical" />
                 <a @click="()=>{row.edit=true}" v-if="!row.edit">编辑</a>
                 <a @click="handleSave(row)" v-else>保存</a>
@@ -38,17 +38,19 @@
         </div>
         <!-- 新增 -->
         <add-class v-if="addShow" :show.sync="addShow"></add-class>
+        <link-list @change="handleLinkChange" v-if="addListShow" :show.sync="addListShow"></link-list>
     </div>
 </template>
 
 <script>
     import AddClass from './-components/add_class';
+    import LinkList from './-components/link_list';
     import { linkclass } from '~/pages/api';
     import mixins from './mixins';
 
     export default {
         mixins: [mixins],
-        components: { AddClass },
+        components: { AddClass, LinkList },
         data() {
             return {
                 loading: true,
@@ -64,6 +66,7 @@
                     { title: '创建时间', slot: 'createTime', width: 160, align: 'center' },
                     { title: '操作', slot: 'opt', width: 240, align: 'center' }
                 ],
+                addListShow: false,
             };
         },
         created() {
@@ -72,6 +75,10 @@
             }
         },
         methods: {
+            handleSet(row) {
+                this.currentRow = row
+                this.addListShow = true
+            },
             getlist() {
                 this.loading = true;
                 linkclass
@@ -100,6 +107,9 @@
                         this.getlist();
                         this.$Message.success('修改成功');
                     });
+            },
+            handleLinkChange() {
+
             }
         }
     };

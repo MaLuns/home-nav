@@ -1,5 +1,5 @@
 const { LinkClass } = require('../models');
-
+const { ObjectID } = require('mongodb')
 module.exports = class LinkClassProxy {
 
     static async newAndSave(docs) {
@@ -31,7 +31,7 @@ module.exports = class LinkClassProxy {
                     }
                 },
                 {
-                    $unwind: { //
+                    $unwind: { // 拆分成多条
                         path: "$parent",
                         preserveNullAndEmptyArrays: true
                     }
@@ -79,19 +79,59 @@ module.exports = class LinkClassProxy {
         return await LinkClass.updateOne({ _id: id }, { $set: doc }).catch(() => ({ ok: 0 }))
     }
 
+    static async updateManyByIds(ids = [], doc) {
+        var _ids = ids.map(id => ObjectID(id))
+        return await LinkClass.updateMany(
+            {
+                _id: { $in: _ids }
+            },
+            {
+                $set: doc
+            }
+        )
+    }
+
     static async findByNavid(id) {
         return LinkClass.aggregate([
             {
                 $match: {
-                    navID: require('mongodb').ObjectID(id)
+                    navID: ObjectID(id),
+                    delete: false
                 }
             },
             {
                 $lookup: {
                     from: 'link_info',
-                    localField: "_id", // user 表关联的字段
-                    foreignField: "classID", // order 表关联的字段
+                    // localField: "_id", // user 表关联的字段
+                    // foreignField: "classID", // order 表关联的字段
+                    let: {
+                        "id": "$_id"
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        {
+                                            "$eq": [
+                                                "$classID",
+                                                "$$id"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                delete: false
+                            }
+                        }
+                    ],
                     as: 'children'
+                }
+            },
+            {
+                $match: {
+                    'children.0': {
+                        $exists: true
+                    }
                 }
             }
         ])

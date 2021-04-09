@@ -20,8 +20,7 @@ module.exports = class NavController {
                 $regex: keywords, $options: 'i'
             }
         }
-        let nav = await NavProxy.find(query)
-        ctx.body = nav
+        ctx.body = await NavProxy.find(query)
     }
 
     static async delete(ctx) {
@@ -30,8 +29,7 @@ module.exports = class NavController {
             ctx.body = ctx.util.refail(null, 10001, ctx.errors)
             return;
         }
-        let ope = await NavProxy.updateById(id, { delete: true })
-        ctx.body = ope
+        ctx.body = await NavProxy.updateById(id, { delete: true })
     }
 
     static async create(ctx) {

@@ -5,7 +5,7 @@
             <div class="class-title">{{ item.title }}</div>
             <ul class="row">
                 <li class="col" v-for="(element, idx) in item.children" :key="idx">
-                    <a class="card-link" :href="element.url" target="_blank">
+                    <a class="card-link" @click="handleCount(element)" :href="element.url" target="_blank">
                         <div class="card-tit">
                             <img :src="element.logo || notLogo" alt @error="handleError(element)" />
                             <div class="name">{{ element.title }}</div>
@@ -25,6 +25,8 @@
 
 <script>
     import notLogo from "~/assets/notlogo.png";
+    import { count } from '~/pages/api';
+
     export default {
         data() {
             return {
@@ -118,6 +120,11 @@
             handleError(item) {
                 item.logo = notLogo;
             },
+            handleCount(item) {
+                count.update({
+                    linkID: item._id
+                })
+            }
         },
     };
 </script>

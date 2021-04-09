@@ -5,63 +5,37 @@
                 <ListItemMeta title="菜单列表"></ListItemMeta>
                 <template slot="action">
                     <li>
-                        <Button @click="addShow=true;" type="dashed">新增</Button>
+                        <Button @click="handleUpdate('create')" type="dashed">新增</Button>
                     </li>
                 </template>
             </ListItem>
-            <ListItem v-for="item in list" :key="item.info._id">
-                <ListItemMeta :title="item.info.title" :description="'路径: '+ item.info.url">
-                    <!--  <template slot="avatar">
-                        <Tag class="dot" type="dot" color="error" v-if="item.info.delete"></Tag>
-                        <Tag class="dot" type="dot" color="success" v-else></Tag>
-                    </template> -->
-                </ListItemMeta>
-                <template v-if="!item._edit">
-                    外部打开: {{ item.info.blank}}
-                    排序: {{item.info.sort}}
+            <ListItem v-for="item in list" :key="item._id">
+                <ListItemMeta :title="item.title" :description="'路径: '+ item.url"></ListItemMeta>
+                <template>
+                    外部打开: {{ item.blank}}
+                    排序: {{item.sort}}
                     <br />
-                    更新时间: {{item.info.createTime}}
-                </template>
-                <template v-else>
-                    <Form ref="formInline" class="form" :rules="ruleValidate" :model="item._deep" inline>
-                        <FormItem prop="title">
-                            <Input type="text" v-model="item._deep.title" maxlength="10" placeholder="请输入标题" />
-                        </FormItem>
-                        <FormItem prop="url">
-                            <Input type="text" v-model="item._deep.url" placeholder="请输入地址" maxlength="15" />
-                        </FormItem>
-                        <FormItem prop="blank">
-                            <i-switch size="large" v-model="item._deep.blank">
-                                <span slot="open">blank</span>
-                                <span slot="close">no</span>
-                            </i-switch>
-                        </FormItem>
-                        <FormItem prop="sort">
-                            <InputNumber :max="100000" :min="1" v-model="item._deep.sort"></InputNumber>
-                        </FormItem>
-                    </Form>
+                    更新时间: {{item.createtime}}
                 </template>
                 <template slot="action" class="action">
                     <li>
-                        <Tag class="dot" type="dot" color="error" v-if="item.info.delete"></Tag>
+                        <Tag class="dot" type="dot" color="error" v-if="item.delete"></Tag>
                         <Tag class="dot" type="dot" color="success" v-else></Tag>
                     </li>
                     <li>
-                        <a @click="addListShow=true;">配置分类</a>
+                        <a @click="handleSet(item)">配置分类</a>
                     </li>
                     <li>
-                        <a @click="()=>{item._edit=true;item._deep={...item.info}}" v-if="!item._edit">编辑</a>
-                        <a @click="handleSave(item._deep)" v-else>保存</a>
+                        <a @click="handleUpdate('update',item)">编辑</a>
                     </li>
                     <li>
-                        <a @click="handleUpdateState(item.info)" v-if="!item._edit">{{item.info.delete?'启用':'停用'}}</a>
-                        <a @click="item._edit=false" v-else>取消</a>
+                        <a @click="handleUpdateState(item)">{{item.delete?'启用':'停用'}}</a>
                     </li>
                 </template>
             </ListItem>
         </List>
         <!-- 新增 -->
-        <add-nav v-if="addShow" :show.sync="addShow"></add-nav>
+        <add-nav v-if="update.show" :show.sync="update.show" :type="update.type" :data="update.data"></add-nav>
         <class-list @change="handleClassChange" v-if="addListShow" :show.sync="addListShow"></class-list>
     </div>
 </template>
@@ -77,7 +51,11 @@
         data() {
             return {
                 list: [],
-                addShow: false,
+                update: {
+                    show: false,
+                    type: 'add',
+                    data: {}
+                },
                 addListShow: false,
                 ruleValidate: {
                     title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
@@ -95,27 +73,9 @@
         },
         methods: {
             getlist() {
-                nav.get({
-                    all: true
-                }).then((res) => {
-                    this.list = res.map(item => ({
-                        info: {
-                            ...item,
-                        },
-                        _edit: false,
-                        _deep: {
-                            ...item
-                        }
-                    }));
+                nav.get({ all: true }).then((res) => {
+                    this.list = res;
                 });
-            },
-            handleSave({ _id: id, blank, title, url, sort }) {
-                nav.update({
-                    id, blank, title, url, sort
-                }).then(res => {
-                    this.getlist()
-                    this.$Message.success('保存成功');
-                })
             },
             handleUpdateState(item) {
                 nav.update({
@@ -126,8 +86,22 @@
                     this.$Message.success('修改成功');
                 })
             },
+            handleUpdate(type, data = {}) {
+                this.update.data = { ...data }
+                this.update.type = type;
+                this.update.show = true;
+            },
+            handleSet(row) {
+                this.currentRow = row
+                this.addListShow = true
+            },
             handleClassChange(ids) {
-                linkclass.update(ids)
+                linkclass.update({
+                    navID: this.currentRow._id,
+                    ids
+                }).then(res => {
+                    this.$Message.success('配置成功');
+                })
             }
         },
     };

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Modal v-model="shows" title="配置菜单分类" width="80%">
+        <Modal v-model="shows" title="配置分类链接" width="80%">
             <i-table @on-row-click="handleRowClick" @on-selection-change="handleSelectionChange" :loading="loading" ref="table" border size="small" :columns="columns" :data="list" :height="maxheight-200">
             </i-table>
             <div class="text-right page">
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import { linkclass } from "~/pages/api";
+    import { link } from "~/pages/api";
     import mixins from '../mixins';
     export default {
         mixins: [mixins],
@@ -25,12 +25,13 @@
                 columns: [
                     { type: 'selection', width: 55, align: 'center' },
                     { type: 'index', width: 55, align: 'center' },
-                    { title: '标题', key: 'title', width: 260 },
-                    { title: '描述', key: 'desc' },
-                    { title: '菜单', key: 'parentTitle', width: 100, align: 'center' },
-                    { title: '链接数', key: 'count', width: 100, align: 'center' },
-                    { title: '排序', key: 'sort', width: 120, align: 'center' },
-                    { title: '创建时间', key: 'createTime', width: 160, align: 'center' }
+                    { title: '标题', key: 'title', ellipsis: true, tooltip: true },
+                    { title: '描述', key: 'desc', ellipsis: true, tooltip: true },
+                    { title: 'url', key: 'url', ellipsis: true, tooltip: true },
+                    { title: 'logo', key: 'logo', ellipsis: true, tooltip: true },
+                    { title: '备注', key: 'remark', ellipsis: true, tooltip: true },
+                    { title: '分类', key: 'parentTitle', width: 120, align: 'center' },
+                    { title: '状态', key: 'status', width: 80, align: 'center' },
                 ],
             }
         },
@@ -56,7 +57,6 @@
         },
         methods: {
             handleSubmit() {
-                console.log(this.checkList)
                 if (this.checkList.length > 0) {
                     this.shows = false
                     this.$emit("change", this.checkList.map(item => item._id))
@@ -70,7 +70,7 @@
             },
             getlist() {
                 this.loading = true;
-                linkclass
+                link
                     .get({ ...this.page })
                     .then(res => {
                         this.list = res.list.map(item => ({ ...item, _checked: false }));

@@ -37,11 +37,11 @@ module.exports = class Util {
     }
 
     /**
-     * 生成MongoDB模糊查询
+     * 生成MongoDB分页模糊查询 
      * @param {*} obj 
      * @param {*} page-key 
      */
-    static parameterGeneration(obj, pages = ['size', 'index']) {
+    static pagesGeneration(obj, pages = ['size', 'index']) {
         let query = {}
         let page = {}
         for (const key in obj) {

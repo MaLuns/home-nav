@@ -52,6 +52,8 @@ const createAPI = (
             } else {
                 return data;
             }
+        }).catch(() => {
+            iView.LoadingBar.error();
         })
 }
 
@@ -81,9 +83,15 @@ const link = {
     delete: data => createAPI('/link', 'delete', data),
     update: data => createAPI('/link', 'put', data),
 }
+
+const count = {
+    update: data => createAPI('/count', 'put', data)
+}
+
 export {
     user,
     nav,
     link,
     linkclass,
+    count
 }

@@ -19,4 +19,5 @@ module.exports = {
     LinkClass: require('./link_class'),
     LinkInfo: require('./link_info'),
     User: require('./user'),
+    Count: require('./count')
 }

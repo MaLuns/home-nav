@@ -50,6 +50,22 @@
                 required: true,
                 default: false
             },
+            type: {
+                type: String,
+                default: 'create',
+            },
+            data: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            }
+        },
+        created() {
+            this.formValidate = {
+                ...this.formValidate,
+                ...this.data
+            }
         },
         computed: {
             shows: {
@@ -65,10 +81,10 @@
             handleSubmit() {
                 this.$refs.formValidate.validate((valid) => {
                     if (valid) {
-                        nav.create({
-                            ...this.formValidate
-                        }).then(res => {
+                        let { _id: id, blank, title, url, sort } = this.formValidate
+                        nav[this.type]({ id, blank, title, url, sort }).then(res => {
                             this.$emit('change')
+                            this.$Message.success('保存成功');
                             this.shows = false
                         })
                     }
