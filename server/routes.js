@@ -24,3 +24,21 @@ exports.api = apiRoute
     .put('/link', LinkController.update)
 
     .put('/count', CountController.add)
+
+
+// 无需登录路由
+exports.unlessRoute = {
+    GET: [
+        '/api/user/init',
+        '/api/linkclass/childen',
+        '/api/nav',
+        '/api/count'
+    ],
+    POST: [
+        '/api/user/login',
+        '/api/user/add'
+    ],
+    PUT: [
+        '/api/count'
+    ]
+}

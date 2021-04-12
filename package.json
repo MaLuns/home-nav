@@ -20,6 +20,7 @@
     "koa-validate": "^1.0.7",
     "mongoose": "^5.12.3",
     "nuxt": "^2.15.3",
+    "path-to-regexp": "^6.2.0",
     "view-design": "^4.5.0"
   },
   "devDependencies": {

@@ -1,0 +1,6 @@
+{
+    "jwtconfig": {
+        "expire": "14 days",
+        "secret": "shared-secret"
+    }
+}
