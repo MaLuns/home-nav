@@ -56,7 +56,6 @@
         },
         methods: {
             handleSubmit() {
-                console.log(this.checkList)
                 if (this.checkList.length > 0) {
                     this.shows = false
                     this.$emit("change", this.checkList.map(item => item._id))

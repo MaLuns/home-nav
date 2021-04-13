@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
-const config = require('../../nuxt.config.js')
+const config = require('../config.json')
 
 mongoose.Promise = global.Promise
-mongoose.connect(config.env.db, {
+mongoose.connect(config.mongodb, {
     //useMongoClient: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     poolSize: 20
 }, (err) => {
     if (err) {
-        console.error('connect to %s error: ', config.get('db'), err.message)
+        console.error('connect to %s error: ', config.mongodb, err.message)
         process.exit(1)
     }
 })

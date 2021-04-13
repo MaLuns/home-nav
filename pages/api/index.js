@@ -1,5 +1,4 @@
 import iView from 'view-design';
-import store from '~/store';
 
 iView.LoadingBar.config({
     height: 3
@@ -18,7 +17,6 @@ const createAPI = (
         headers,
         credentials: 'same-origin'
     }
-    console.log(store)
     iView.LoadingBar.start();
     if (['post', 'put'].includes(method)) {
         config.body = JSON.stringify(data)
@@ -46,7 +44,7 @@ const createAPI = (
                         })
                     })
                 } else if (data.code === 401) {
-
+                    location.href = '/admin'
                 } else if (data.code === -1) {
                     iView.Notice.error({
                         title: '结果',

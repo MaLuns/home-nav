@@ -20,7 +20,7 @@
         async fetch() {
             this.nav = await this.$mock("/api/nav");
         },
-        created() {
+        mounted() {
             if (process.client) {
                 this.init();
             }
@@ -79,7 +79,7 @@
                     &::after,
                     &::before {
                         position: absolute;
-                        content: "";
+                        content: '';
                         display: block;
                         width: 40px;
                         height: 1px;
@@ -146,7 +146,7 @@
                 transition: all 0.3s;
 
                 &::after {
-                    content: "";
+                    content: '';
                     width: 16px;
                     height: 16px;
                     background: var(--ion-color-step-800, #c9ccce);

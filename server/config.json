@@ -1,4 +1,8 @@
 {
+    "server": {
+        "port": 7000
+    },
+    "mongodb": "mongodb://localhost/home-nav",
     "jwtconfig": {
         "expire": "14 days",
         "secret": "shared-secret"

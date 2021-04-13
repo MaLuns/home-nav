@@ -23,11 +23,10 @@ module.exports = class UserController {
             return
         }
         let token = jwt.sign({ id: user.id }, jwtconfig.secret, { expiresIn: jwtconfig.expire })
-        ctx.cookies.set('token', token, { signed: false, maxAge: 7200000 });
+        ctx.cookies.set('token', token, { signed: false, maxAge: 360 * 24 * 14 });
         ctx.body = ctx.util.resuccess({
             id: user.id,
-            name: user.name,
-            token
+            name: user.name
         })
     }
 
@@ -66,4 +65,8 @@ module.exports = class UserController {
         })
     }
 
+    static async out(ctx) {
+        ctx.cookies.set('token', '', { signed: false, maxAge: -1 });
+        ctx.body = ctx.util.resuccess('退出成功');
+    }
 }
