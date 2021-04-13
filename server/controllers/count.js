@@ -8,7 +8,7 @@ module.exports = class CountController {
             ctx.body = ctx.util.refail(null, 10001, ctx.errors)
             return;
         }
-        ctx.body = CountProxy.add(linkID)
+        ctx.body = CountProxy.update(linkID)
     }
 
 }

@@ -1,7 +1,16 @@
 <template>
     <div>
-        <div class="text-right mgb10">
-            <Button @click="handleUpdate('create')" type="dashed">新增</Button>
+        <div class="text-right">
+            <Form ref="formInline" class="search-from" :model="search" inline>
+                <FormItem>
+                    <Input type="text" v-model="search.keywords">
+                    </Input>
+                </FormItem>
+                <FormItem>
+                    <Button type="primary">查询</Button>
+                    <Button @click="handleUpdate('create')" type="dashed">新增</Button>
+                </FormItem>
+            </Form>
         </div>
         <i-table :loading="loading" ref="table" border size="small" :columns="columns" :data="list" :height="maxheight">
             <template slot-scope="{ row }" slot="opt">
@@ -35,6 +44,9 @@
         components: { AddClass, LinkList },
         data() {
             return {
+                search: {
+                    keywords: ''
+                },
                 loading: true,
                 update: {
                     show: false,

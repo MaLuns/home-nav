@@ -435,3 +435,7 @@ samp {
 .page {
     padding-top: 10px;
 }
+
+.search-from .ivu-form-item {
+    margin-bottom: 10px;
+}

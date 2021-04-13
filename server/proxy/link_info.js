@@ -9,7 +9,6 @@ module.exports = class LinkInfoProxy {
     }
 
     static async find(query, pages) {
-        console.log(pages)
         if (pages.index && pages.size) {
             let count = await LinkInfo.countDocuments(query)
             let list = await LinkInfo.aggregate([
