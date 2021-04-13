@@ -20,15 +20,87 @@
         },
         data() {
             return {
-                type: "",
+                type: "百度",
                 searchStr: "",
-                search: [],
+                search: [
+                    {
+                        "title": "百度",
+                        "name": "wd",
+                        "action": "https://www.baidu.com/s"
+                    },
+                    {
+                        "title": "搜狗",
+                        "name": "query",
+                        "action": "https://www.sogou.com/web"
+                    },
+                    {
+                        "title": "必应",
+                        "name": "q",
+                        "action": "https://cn.bing.com/search"
+                    },
+                    {
+                        "title": "谷歌",
+                        "name": "q",
+                        "action": "https://www.google.com/search"
+                    },
+                    {
+                        "title": "有道",
+                        "name": "q",
+                        "action": "https://dict.youdao.com/search"
+                    },
+                    {
+                        "title": "百度学术",
+                        "name": "wd",
+                        "action": "https://xueshu.baidu.com/s"
+                    },
+                    {
+                        "title": "淘宝",
+                        "name": "q",
+                        "action": "https://s.taobao.com/search"
+                    },
+                    {
+                        "title": "京东",
+                        "name": "keyword",
+                        "action": "https://search.jd.com/Search"
+                    },
+                    {
+                        "title": "天猫",
+                        "name": "q",
+                        "action": "https://list.tmall.com/search_product.htm"
+                    },
+                    {
+                        "title": "知乎",
+                        "name": "q",
+                        "action": "https://www.zhihu.com/search"
+                    },
+                    {
+                        "title": "微信",
+                        "name": "query",
+                        "action": "https://weixin.sogou.com/weixin"
+                    },
+                    {
+                        "title": "微博",
+                        "name": "q",
+                        "action": "https://s.weibo.com/weibo"
+                    },
+                    {
+                        "title": "花瓣",
+                        "name": "q",
+                        "action": "https://huaban.com/search"
+                    },
+                    {
+                        "title": "酷狗",
+                        "name": "searchKeyWord",
+                        "action": "https://www.kugou.com/yy/html/search.html"
+                    },
+                    {
+                        "title": "b站",
+                        "name": "keyword",
+                        "action": "https://search.bilibili.com/all"
+                    }
+                ],
                 placeholder: "搜索一下～",
             };
-        },
-        async fetch() {
-            this.search = await this.$mock("/mock/search.json");
-            this.type = this.search[0].title;
         },
         methods: {
             handleSubmit() {

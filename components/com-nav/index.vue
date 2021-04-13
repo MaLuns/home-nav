@@ -20,6 +20,8 @@
             <span class="left-nav-tag" :style="{top:top*60+30+'px'}"></span>
             <li @click="handleScroll(item,item.index)" class="left-nav-title" :class="{active:checkIndex===item.index}" v-for="item in leftNavList" :key="item.index">{{ item.title }}</li>
         </ul>
+        <BackTop></BackTop>
+
     </div>
 </template>
 
@@ -28,6 +30,7 @@
     import { count } from '~/pages/api';
 
     export default {
+        name: 'comNav',
         data() {
             return {
                 notLogo,
@@ -82,7 +85,7 @@
             const scroll = () => {
                 let root = document.documentElement;
                 var scrollTop = document.body.scrollTop || root.scrollTop;
-                if (!this._list) {
+                if (!this._list || this._list.length === 0) {
                     this._list = this.list.map(
                         (item) =>
                             document.getElementById(item.title).offsetTop +

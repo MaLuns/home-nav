@@ -1,17 +1,12 @@
 module.exports = {
   telemetry: false, // 关闭提示
-
-  server: {
-    port: 7000,
-  },
   dev: process.env.NODE_ENV !== 'production',
   env: {
     baseURL: "http://localhost:7000",
     port: 7000,
-    db: "mongodb://localhost/home-nav"
   },
 
-  loading: '~/components/loading.vue',
+  loading: '~/components/com-loading/index.vue',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -26,13 +21,14 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      { rel: 'stylesheet', href: '/styles/iview.css' },
       { rel: 'stylesheet', href: '/styles/index.css' }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    /*  'view-design/dist/styles/iview.css' */
+    /* 'view-design/dist/styles/iview.css' */
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

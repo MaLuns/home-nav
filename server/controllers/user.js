@@ -1,10 +1,8 @@
 const { UserProxy } = require('../proxy');
 const jwt = require('jsonwebtoken')
 const util = require('../util')
-let jwtconfig = {
-    "expire": "14 days",
-    "secret": "shared-secret"
-}
+let { jwtconfig } = require('../config.json')
+
 module.exports = class UserController {
 
     static async login(ctx) {
@@ -24,11 +22,11 @@ module.exports = class UserController {
             ctx.body = ctx.util.refail('用户名或密码错误')
             return
         }
-
+        let token = jwt.sign({ id: user.id }, jwtconfig.secret, { expiresIn: jwtconfig.expire })
+        ctx.cookies.set('token', token, { signed: false, maxAge: 360 * 24 * 14 });
         ctx.body = ctx.util.resuccess({
             id: user.id,
-            name: user.name,
-            token: jwt.sign({ id: user.id }, jwtconfig.secret, { expiresIn: jwtconfig.expire })
+            name: user.name
         })
     }
 
@@ -67,4 +65,8 @@ module.exports = class UserController {
         })
     }
 
+    static async out(ctx) {
+        ctx.cookies.set('token', '', { signed: false, maxAge: -1 });
+        ctx.body = ctx.util.resuccess('退出成功');
+    }
 }

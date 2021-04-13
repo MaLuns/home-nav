@@ -14,7 +14,8 @@ const createAPI = (
 ) => {
     let config = {
         method,
-        headers
+        headers,
+        credentials: 'same-origin'
     }
     iView.LoadingBar.start();
     if (['post', 'put'].includes(method)) {
@@ -42,6 +43,8 @@ const createAPI = (
                             desc: item[Object.keys(item)[0]]
                         })
                     })
+                } else if (data.code === 401) {
+                    location.href = '/admin'
                 } else if (data.code === -1) {
                     iView.Notice.error({
                         title: '结果',
