@@ -1,14 +1,21 @@
-# home-nav
+<h1 align="center">home-nav</h1>
 
-#### Description
-一款简洁的首页导航
+<div align="center">
+    基于Nuxt.js + koa + MongoDB,一个简洁的导航管理项目
+</div>
 
-### 示例
+## 运行
+```
+yarn
+yarn run  dev 
+```
+
+## 截图
 ![示例一](./demo/demo1.png)
 ![示例二](./demo/demo2.png)
 ![示例三](./demo/demo3.png)
 
-### TODO
+## 功能
 1. 前台功能
 - [x] 首页
 - [x] 导航链接
@@ -26,3 +33,10 @@
     - [x] CURD
     - [ ] 导入,导出
 - [ ] 统计分析
+
+## 参与贡献
+
+非常欢迎你的贡献，你可以通过以下方式一起共建 :smiley:：
+
+- 通过 Issue 报告 bug 或进行咨询。
+- 提交 Pull Request 改进 home-nav 的代码。

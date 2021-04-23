@@ -1,2 +1,0 @@
-require('../qcdh')
-require('./xddh')

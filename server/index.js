@@ -13,10 +13,8 @@ require('koa-validate')(app)
 
 
 const start = async () => {
-    if (nuxtConfig.dev) {
-        const builder = new Builder(nuxt);
-        await builder.build();
-    }
+    const builder = new Builder(nuxt);
+    await builder.build();
 
     app
         .use(middlewares.util)
@@ -38,21 +36,3 @@ const start = async () => {
 }
 
 start()
-
-
-
-
-
-/* const http = require('http')
-const { Nuxt, Builder } = require('nuxt');
-const config = require('../nuxt.config.js')
-
-const nuxt = new Nuxt(config)
-const builder = new Builder(nuxt);
-
-builder.build().then(() => {
-    http.createServer(function (req, res) {
-        console.log(req.url)
-        nuxt.render(req, res)
-    }).listen(config.env.port)
-}) */
