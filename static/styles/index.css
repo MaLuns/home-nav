@@ -10,6 +10,9 @@
     --ion-text-color    : #515a6e;
     --ion-text-color-rgb: 81, 90, 110;
 
+
+    --ion-color-step-50-reversal: #313131;
+
     --ion-color-step    : #ffffff;
     --ion-color-step-50 : #e9edf1;
     --ion-color-step-100: #e1e6ea;
@@ -42,6 +45,8 @@
 
     --ion-text-color    : #f1f5f8;
     --ion-text-color-rgb: 241, 245, 248;
+
+    --ion-color-step-50-reversal: #e9edf1;
 
     --ion-color-step    : #000000;
     --ion-color-step-50 : #313131;

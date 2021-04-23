@@ -14,6 +14,7 @@ module.exports = class NavProxy {
             title: 1,
             url: 1,
             sort: 1,
+            isDesc: 1,
             createtime: {
                 $dateToString: {
                     format: "%Y-%m-%d %H:%M:%S", date: "$createTime"
@@ -37,7 +38,7 @@ module.exports = class NavProxy {
     }
 
     static async updateById(id, doc) {
-        return await Nav.updateOne({ _id: id }, { $set: doc }).catch(() => ({ ok: 0 }))
+        return await Nav.update({ _id: id }, { $set: doc }).catch(() => ({ ok: 0 }))
     }
 
 }

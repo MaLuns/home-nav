@@ -44,7 +44,7 @@ module.exports = class NavController {
             ctx.body = ctx.util.resuccess('当前路径已存在')
             return;
         }
-        let par = uitl.objFilterKey(ctx.request.body, ['sort', 'blank'])
+        let par = uitl.objFilterKey(ctx.request.body, ['sort', 'blank', 'isDesc'])
         let res = await NavProxy.newAndSave({ title, url, ...par })
         ctx.body = ctx.util.resuccess(res)
     }
@@ -56,11 +56,16 @@ module.exports = class NavController {
             ctx.body = ctx.util.refail(null, 10001, ctx.errors)
             return;
         }
-        let par = uitl.objFilterKey(ctx.request.body, ['title', 'url', 'delete', 'sort', 'blank'])
+        let par = uitl.objFilterKey(ctx.request.body, ['title', 'url', 'delete', 'sort', 'blank', 'isDesc'])
         if (par.url) {
-            let navs = await NavProxy.find({ url, _id: id })
+            let navs = await NavProxy.find({
+                url: par.url,
+                _id: {
+                    $ne: id
+                }
+            })
             if (navs.length > 0) {
-                ctx.body = ctx.util.resuccess('当前路径已存在')
+                ctx.body = ctx.util.refail('当前路径已存在')
                 return;
             }
         }

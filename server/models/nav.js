@@ -6,6 +6,7 @@ const schema = new Schema(
         title: String,
         url: String,
         sort: Number,
+        isDesc: Boolean,
         delete: {
             type: Boolean,
             default: false

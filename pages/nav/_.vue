@@ -1,6 +1,6 @@
 <template>
     <div>
-        <com-nav :list="list"></com-nav>
+        <com-nav :list="list" :is-desc="isDesc"></com-nav>
     </div>
 </template>
 
@@ -11,6 +11,7 @@
         },
         data() {
             return {
+                isDesc: false,
                 list: [],
             };
         },
@@ -28,6 +29,7 @@
             }
         },
         async fetch() {
+            this.isDesc = this.$options.navinfo.isDesc;
             this.list = await this.$mock("/api/linkclass/childen?id=" + this.$options.navinfo._id);
         },
     };

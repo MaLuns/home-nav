@@ -6,6 +6,9 @@
             </li>
             <li @click="handleOpen" class="switch-theme" :class="{active:isActive}"></li>
         </ul>
+        <div class="bg" ref="bg">
+            <div></div>
+        </div>
     </header>
 </template>
 
@@ -41,6 +44,10 @@
                     if (classList.contains("dark")) classList.remove("dark");
                 }
                 window.localStorage.setItem("theme", this.isActive);
+                this.$refs.bg.classList.add('active')
+                setTimeout(() => {
+                    this.$refs.bg.classList.remove('active')
+                }, 500);
             },
         },
     };
@@ -160,6 +167,33 @@
                 &.active::after {
                     left: 34px;
                 }
+            }
+        }
+    }
+
+    .bg {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+
+        div {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            right: 50px;
+            top: 20px;
+            border-radius: 50%;
+            transform: scale(0);
+        }
+
+        &.active {
+            background: var(--ion-color-step-50-reversal, #fff);
+
+            div {
+                background: var(--ion-color-step-50, #fff);
+                transform: scale(40);
+                transition: all 0.6s;
             }
         }
     }

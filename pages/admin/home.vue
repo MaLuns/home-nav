@@ -13,9 +13,6 @@
                     <nuxt-link to="/admin/home/link">
                         <MenuItem name="/admin/home/link">网址管理</MenuItem>
                     </nuxt-link>
-                    <nuxt-link to="/admin/home/count">
-                        <MenuItem name="/admin/home/count">统计</MenuItem>
-                    </nuxt-link>
                 </div>
             </Menu>
         </Header>

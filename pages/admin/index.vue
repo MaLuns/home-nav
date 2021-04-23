@@ -66,7 +66,7 @@
             },
             setToken(user) {
                 // this.$store.commit('setUser', user)
-                this.$router.push('/admin/home')
+                this.$router.push('/admin/home/nav')
             }
         }
     }

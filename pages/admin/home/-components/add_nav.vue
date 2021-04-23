@@ -11,6 +11,9 @@
                 <FormItem label="排序" prop="sort">
                     <InputNumber style="width:100%" :max="100000" :min="1" v-model="formValidate.sort"></InputNumber>
                 </FormItem>
+                <FormItem label="描述" prop="isDesc">
+                    <i-switch v-model="formValidate.isDesc"></i-switch>
+                </FormItem>
                 <FormItem label="blank" prop="blank">
                     <i-switch v-model="formValidate.blank"></i-switch>
                 </FormItem>
@@ -33,6 +36,7 @@
                     url: '',
                     title: '',
                     blank: false,
+                    isDesc: false,
                     sort: 0
                 },
                 ruleValidate: {
@@ -81,10 +85,9 @@
             handleSubmit() {
                 this.$refs.formValidate.validate((valid) => {
                     if (valid) {
-                        let { _id: id, blank, title, url, sort } = this.formValidate
-                        nav[this.type]({ id, blank, title, url, sort }).then(res => {
+                        let { _id: id, blank, title, url, sort, isDesc } = this.formValidate
+                        nav[this.type]({ id, blank, title, url, sort, isDesc }).then(res => {
                             this.$emit('change')
-                            this.$Message.success('保存成功');
                             this.shows = false
                         })
                     }
