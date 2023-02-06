@@ -20,6 +20,7 @@ const start = async () => {
         .use(middlewares.util)
         .use(middlewares.notAuthHandle)
         .use(middlewares.unless())
+        .use(middlewares.prettyQuery())
         .use(bodyParser())
         .use(routes.api.routes())
         .use(routes.api.allowedMethods())

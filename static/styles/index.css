@@ -444,3 +444,7 @@ samp {
 .search-from .ivu-form-item {
     margin-bottom: 10px;
 }
+
+.ivu-checkbox-wrapper {
+    margin-right: 0;
+}

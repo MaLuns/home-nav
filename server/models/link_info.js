@@ -14,7 +14,7 @@ const schema = new Schema(
         },
         status: {
             type: Number,
-            default: 0 //0 停用 1 启用
+            default: 0 //0 未审核 1 已审核
         },
         remark: String,
         delete: {

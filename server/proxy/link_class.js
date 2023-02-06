@@ -53,6 +53,14 @@ module.exports = class LinkClassProxy {
                         desc: 1,
                         sort: 1,
                         title: 1,
+                        allocation: { $toBool: "$navID" },
+                        allocationStr: {
+                            $cond: {
+                                if: { $toBool: "$navID" },
+                                then: '已分配',
+                                else: '未分配'
+                            }
+                        },
                         parentTitle: '$parent.title',
                         count: { $size: '$children' }
                     }
@@ -120,6 +128,7 @@ module.exports = class LinkClassProxy {
                                         }
                                     ]
                                 },
+                                status: 1,
                                 delete: false
                             }
                         }
@@ -135,5 +144,12 @@ module.exports = class LinkClassProxy {
                 }
             }
         ])
+    }
+
+    static async deleteByIds(ids = []) {
+        var _ids = ids.map(id => ObjectID(id))
+        return LinkClass.deleteMany({
+            _id: { $in: _ids }
+        })
     }
 }

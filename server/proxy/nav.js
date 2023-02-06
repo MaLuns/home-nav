@@ -41,4 +41,10 @@ module.exports = class NavProxy {
         return await Nav.update({ _id: id }, { $set: doc }).catch(() => ({ ok: 0 }))
     }
 
+    static async deleteByIds(ids = []) {
+        var _ids = ids.map(id => ObjectID(id))
+        return Nav.deleteMany({
+            _id: { $in: _ids }
+        })
+    }
 }

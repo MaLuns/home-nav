@@ -3,6 +3,34 @@ const { pathToRegexp } = require('path-to-regexp')
 let { jwtconfig } = require('../config.json')
 const routes = require('../routes')
 
+const regex = {
+    integer: /^-?\d+$/,
+    decimal: /^-?\d*\.?\d+$/,
+    boolean: /^(true|false)$/,
+    null: /^null$/,
+    undefined: /^undefined$/,
+};
+
+/**
+ * Format value
+ * @param value
+ * @return {*}
+ */
+const parseValue = (value) => {
+    if (regex.integer.test(value)) {
+        return parseInt(value, 10);
+    } else if (regex.decimal.test(value)) {
+        return parseFloat(value);
+    } else if (regex.boolean.test(value)) {
+        return value === 'true';
+    } else if (regex.null.test(value)) {
+        return null;
+    } else if (regex.undefined.test(value)) {
+        return undefined;
+    }
+    return value;
+};
+
 const codeMap = {
     '-1': 'fail',
     '200': 'success',
@@ -58,5 +86,24 @@ module.exports = class Middleware {
                 throw err;
             }
         });
+    }
+
+    static prettyQuery({ override = true } = {}) {
+        return async (ctx, next) => {
+            const query = ctx.query;
+            const result = {};
+            // Transform
+            Object.keys(query).filter(n => n).forEach((key) => {
+                const value = query[key];
+                result[key] = Array.isArray(value) ? value.map(n => parseValue(n)) : parseValue(value);
+            });
+            // Assign
+            if (override) {
+                Object.assign(ctx.query, result);
+            } else {
+                ctx.prettyQuery = result;
+            }
+            await next();
+        }
     }
 }

@@ -12,7 +12,8 @@
                     <Input v-model="formValidate.logo" placeholder="图标地址" maxlength="100" />
                 </FormItem>
                 <FormItem label="描述" prop="desc">
-                    <Input v-model="formValidate.desc" placeholder="描述" maxlength="15" />
+                    <Input v-model="formValidate.desc" type="textarea" :autosize="{ minRows: 2, maxRows: 5 }"
+                        placeholder="描述" maxlength="125" />
                 </FormItem>
                 <FormItem label="排序" prop="sort">
                     <InputNumber style="width:100%" :max="100000" :min="1" v-model="formValidate.sort"></InputNumber>
@@ -26,82 +27,83 @@
 </template>
 
 <script>
-    import { link } from "~/pages/api";
-    import { regexp } from "~/pages/util";
+import { link } from "~/pages/api";
+import { regexp } from "~/pages/util";
 
-    export default {
-        data() {
-            return {
-                formValidate: {
-                    desc: '',
-                    logo: '',
-                    url: '',
-                    title: '',
-                    sort: 0
-                },
-                ruleValidate: {
-                    title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-                    url: [
-                        { required: true, message: '请输入路径', trigger: 'blur' },
-                        { message: '请输入网址', trigger: 'blur', pattern: regexp.url },
-                    ],
-                    logo: [
-                        { required: true, message: '请输入路径', trigger: 'blur' },
-                        { message: '请输入图片在线链接', trigger: 'blur', pattern: regexp.url },
-                    ]
-                }
-            }
-        },
-        props: {
-            show: {
-                type: Boolean,
-                required: true,
-                default: false
+export default {
+    data() {
+        return {
+            formValidate: {
+                desc: '',
+                logo: '',
+                url: '',
+                title: '',
+                sort: 0
             },
-            type: {
-                type: String,
-                default: 'create',
-            },
-            data: {
-                type: Object,
-                default() {
-                    return {}
-                }
-            }
-        },
-        created() {
-            this.formValidate = {
-                ...this.formValidate,
-                ...this.data
-            }
-        },
-        computed: {
-            shows: {
-                get() {
-                    return this.show;
-                },
-                set(newValue) {
-                    this.$emit('update:show', newValue);
-                }
-            }
-        },
-        methods: {
-            handleSubmit() {
-                this.$refs.formValidate.validate((valid) => {
-                    if (valid) {
-                        let { _id: id, desc, logo, url, title, sort } = this.formValidate
-                        link[this.type]({
-                            id, desc, title, sort, logo, url
-                        }).then(res => {
-                            this.$emit('change')
-                            this.shows = false
-                        })
-                    }
-                })
+            ruleValidate: {
+                title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+                url: [
+                    { required: true, message: '请输入路径', trigger: 'blur' },
+                    { message: '请输入网址', trigger: 'blur', pattern: regexp.url },
+                ],
+                logo: [
+                    { required: true, message: '请输入路径', trigger: 'blur' },
+                    { message: '请输入图片在线链接', trigger: 'blur', pattern: regexp.url },
+                ]
             }
         }
+    },
+    props: {
+        show: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        type: {
+            type: String,
+            default: 'create',
+        },
+        data: {
+            type: Object,
+            default() {
+                return {}
+            }
+        }
+    },
+    created() {
+        this.formValidate = {
+            ...this.formValidate,
+            ...this.data
+        }
+    },
+    computed: {
+        shows: {
+            get() {
+                return this.show;
+            },
+            set(newValue) {
+                this.$emit('update:show', newValue);
+            }
+        }
+    },
+    methods: {
+        handleSubmit() {
+            this.$refs.formValidate.validate((valid) => {
+                if (valid) {
+                    let { _id: id, desc, logo, url, title, sort } = this.formValidate
+                    link[this.type]({
+                        id, desc, title, sort, logo, url
+                    }).then(res => {
+                        this.$emit('change')
+                        this.shows = false
+                    })
+                }
+            })
+        }
     }
+}
 </script>
 
 <style>
+
 </style>

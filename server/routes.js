@@ -6,21 +6,22 @@ exports.api = apiRoute
     .post('/user/login', UserController.login)
     .post('/user/add', UserController.add)
     .get('/user/init', UserController.init)
+    .get('/user/out', UserController.out)
 
     .get('/nav', NavController.list)
     .post('/nav', NavController.create)
-    .delete('/nav', NavController.delete)
+    .delete('/nav/:id', NavController.delete)
     .put('/nav', NavController.update)
 
     .get('/linkclass', LinkClassController.list)
     .post('/linkclass', LinkClassController.create)
-    .delete('/linkclass', LinkClassController.delete)
+    .delete('/linkclass/:id', LinkClassController.delete)
     .put('/linkclass', LinkClassController.update)
     .get('/linkclass/childen', LinkClassController.findByNavid)
 
     .get('/link', LinkController.list)
     .post('/link', LinkController.create)
-    .delete('/link', LinkController.delete)
+    .delete('/link/:id', LinkController.delete)
     .put('/link', LinkController.update)
 
     .put('/count', CountController.add)
@@ -40,5 +41,6 @@ exports.unlessRoute = {
     ],
     PUT: [
         '/api/count'
-    ]
+    ],
+    DELETE: []
 }

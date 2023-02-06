@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-
+const { ObjectID } = require('mongodb')
 
 module.exports = class Util {
 
@@ -37,16 +37,30 @@ module.exports = class Util {
     }
 
     /**
-     * 生成MongoDB分页模糊查询 
-     * @param {*} obj 
-     * @param {*} page-key 
+    * 生成MongoDB分页模糊查询 
+    * @param {*} obj 
+    * @param {*} objectIDs ObjectID 
+    * @param {*} bools Boolean
+    * @param {*} numbers Number
+    * @param {*} page-key 
+    * @returns 
      */
-    static pagesGeneration(obj, pages = ['size', 'index']) {
+    static pagesGeneration(obj, objectIDs = [], bools = [], numbers = [], pages = ['size', 'index']) {
         let query = {}
         let page = {}
         for (const key in obj) {
             if (pages.includes(key)) {
                 page[key] = parseInt(obj[key])
+            } else if (objectIDs.includes(key)) {
+                if (obj[key]) {
+                    query[key] = ObjectID(obj[key])
+                } else {
+                    query[key] = null
+                }
+            } else if (bools.includes(key)) {
+                query[key] = Boolean(obj[key])
+            } else if (numbers.includes(key)) {
+                query[key] = obj[key]
             } else {
                 query[key] = {
                     $regex: obj[key], $options: 'i'

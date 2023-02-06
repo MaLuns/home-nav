@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken')
 const util = require('../util')
 let { jwtconfig } = require('../config.json')
 
+const getToken = (id) => jwt.sign({ id }, jwtconfig.secret, { expiresIn: jwtconfig.expire })
+const setCookies = (ctx, token) => ctx.cookies.set('token', token, { signed: false, maxAge: 1000 * 3600 * 24 * 14 });
+
 module.exports = class UserController {
 
     static async login(ctx) {
@@ -22,8 +25,8 @@ module.exports = class UserController {
             ctx.body = ctx.util.refail('用户名或密码错误')
             return
         }
-        let token = jwt.sign({ id: user.id }, jwtconfig.secret, { expiresIn: jwtconfig.expire })
-        ctx.cookies.set('token', token, { signed: false, maxAge: 360 * 24 * 14 });
+
+        setCookies(ctx, getToken(user.id))
         ctx.body = ctx.util.resuccess({
             id: user.id,
             name: user.name
@@ -58,10 +61,10 @@ module.exports = class UserController {
             return
         }
 
+        setCookies(ctx, getToken(user.id))
         ctx.body = ctx.util.resuccess({
             id: user.id,
-            name: user.name,
-            token: jwt.sign({ id: user.id }, jwtconfig.secret, { expiresIn: jwtconfig.expire })
+            name: user.name
         })
     }
 

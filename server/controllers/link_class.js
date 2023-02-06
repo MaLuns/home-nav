@@ -5,8 +5,8 @@ const { ObjectID } = require('mongodb')
 module.exports = class LinkClassController {
 
     static async list(ctx) {
-        let par = uitl.objFilterKey(ctx.query, ['title', 'desc', 'size', 'index'])
-        let query = uitl.pagesGeneration(par)
+        let par = uitl.objFilterKey(ctx.query, ['title', 'desc', 'size', 'index', 'delete', 'navID'])
+        let query = uitl.pagesGeneration(par, ['navID'], ['delete'])
         let nav = await LinkClassProxy.find(...query)
         ctx.body = nav
     }
@@ -22,14 +22,6 @@ module.exports = class LinkClassController {
         ctx.body = ctx.util.resuccess(res)
     }
 
-    static async delete(ctx) {
-        const id = ctx.query.id
-        let ope = await LinkClassProxy.updateById(id, {
-            delete: true
-        })
-        ctx.body = ope
-    }
-
     static async update(ctx) {
         let body = ctx.request.body
         if (body.navID) {
@@ -39,7 +31,7 @@ module.exports = class LinkClassController {
                 ctx.body = ctx.util.refail(null, 10001, ctx.errors)
                 return;
             }
-            let res = await LinkClassProxy.updateManyByIds(ids, { navID: ObjectID(navID) });
+            let res = await LinkClassProxy.updateManyByIds(ids, { navID: navID === -1 ? null : ObjectID(navID) });
             if (res.ok) {
                 ctx.body = ctx.util.resuccess('修改成功')
             } else {
@@ -69,5 +61,14 @@ module.exports = class LinkClassController {
         }
         let list = await LinkClassProxy.findByNavid(id);
         ctx.body = list;
+    }
+
+    static async delete(ctx) {
+        const id = ctx.checkParams('id').notEmpty().value;
+        if (ctx.errors) {
+            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+            return;
+        }
+        ctx.body = await LinkClassProxy.deleteByIds([id])
     }
 }

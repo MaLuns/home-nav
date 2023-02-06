@@ -23,15 +23,6 @@ module.exports = class NavController {
         ctx.body = await NavProxy.find(query)
     }
 
-    static async delete(ctx) {
-        const id = ctx.checkQuery('id').notEmpty().value
-        if (ctx.errors) {
-            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
-            return;
-        }
-        ctx.body = await NavProxy.updateById(id, { delete: true })
-    }
-
     static async create(ctx) {
         const title = ctx.checkBody('title').notEmpty().value
         const url = ctx.checkBody('url').notEmpty().value
@@ -48,7 +39,6 @@ module.exports = class NavController {
         let res = await NavProxy.newAndSave({ title, url, ...par })
         ctx.body = ctx.util.resuccess(res)
     }
-
 
     static async update(ctx) {
         const id = ctx.checkBody('id').notEmpty().value
@@ -75,5 +65,14 @@ module.exports = class NavController {
         } else {
             ctx.body = ctx.util.refail('修改失败')
         }
+    }
+
+    static async delete(ctx) {
+        const id = ctx.checkParams('id').notEmpty().value;
+        if (ctx.errors) {
+            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+            return;
+        }
+        ctx.body = await NavProxy.deleteByIds([id])
     }
 }

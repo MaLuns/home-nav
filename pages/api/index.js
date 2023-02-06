@@ -18,7 +18,7 @@ const createAPI = (
         credentials: 'same-origin'
     }
     iView.LoadingBar.start();
-    if (['post', 'put'].includes(method)) {
+    if (['post', 'put', 'delete'].includes(method)) {
         config.body = JSON.stringify(data)
     } else {
         let str = ''
@@ -69,21 +69,21 @@ const user = {
 const nav = {
     get: data => createAPI('/nav', 'get', data),
     create: data => createAPI('/nav', 'post', data),
-    delete: data => createAPI('/nav', 'delete', data),
+    delete: id => createAPI('/nav/' + id, 'delete'),
     update: data => createAPI('/nav', 'put', data),
 }
 
 const linkclass = {
     get: data => createAPI('/linkclass', 'get', data),
     create: data => createAPI('/linkclass', 'post', data),
-    delete: data => createAPI('/linkclass', 'delete', data),
+    delete: id => createAPI('/linkclass/' + id, 'delete'),
     update: data => createAPI('/linkclass', 'put', data),
 }
 
 const link = {
     get: data => createAPI('/link', 'get', data),
     create: data => createAPI('/link', 'post', data),
-    delete: data => createAPI('/link', 'delete', data),
+    delete: id => createAPI('/link/' + id, 'delete'),
     update: data => createAPI('/link', 'put', data),
 }
 

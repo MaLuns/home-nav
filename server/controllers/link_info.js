@@ -5,8 +5,8 @@ const { ObjectID } = require('mongodb')
 module.exports = class LinkController {
 
     static async list(ctx) {
-        let par = uitl.objFilterKey(ctx.query, ['title', 'desc', 'size', 'index'])
-        let query = uitl.pagesGeneration(par)
+        let par = uitl.objFilterKey(ctx.query, ['title', 'desc', 'size', 'index', 'delete', 'classID', 'status'])
+        let query = uitl.pagesGeneration(par, ['classID'], ['delete'], ['status'])
         let nav = await LinkProxy.find(...query)
         ctx.body = nav
     }
@@ -21,19 +21,21 @@ module.exports = class LinkController {
         let par = uitl.objFilterKey(ctx.request.body, ['logo', 'sort', 'desc'])
         let res = await LinkProxy.newAndSave({ url, title, ...par })
         ctx.body = ctx.util.resuccess(res)
-        ctx.body = 'xxx'
     }
 
     static async update(ctx) {
         let body = ctx.request.body
-        if (body.classID) {
-            const classID = ctx.checkBody('classID').notEmpty().value
+        if (body.ids) {
             const ids = ctx.checkBody('ids').notEmpty().type('array').value
             if (ctx.errors) {
                 ctx.body = ctx.util.refail(null, 10001, ctx.errors)
                 return;
             }
-            let res = await LinkProxy.updateManyByIds(ids, { classID: ObjectID(classID) });
+
+            let par = uitl.objFilterKey(ctx.request.body, ['delete', 'status', 'classID'])
+            par.classID = par.classID === -1 ? null : ObjectID(par.classID)
+
+            let res = await LinkProxy.updateManyByIds(ids, par);
             if (res.ok) {
                 ctx.body = ctx.util.resuccess('修改成功')
             } else {
@@ -45,7 +47,7 @@ module.exports = class LinkController {
                 ctx.body = ctx.util.refail(null, 10001, ctx.errors)
                 return;
             }
-            let par = uitl.objFilterKey(ctx.request.body, ['title', 'url', 'logo', 'delete', 'sort', 'desc'])
+            let par = uitl.objFilterKey(ctx.request.body, ['title', 'url', 'logo', 'delete', 'sort', 'desc', 'status'])
             let res = await LinkProxy.updateById(id, par);
             if (res.ok) {
                 ctx.body = ctx.util.resuccess('修改成功')
@@ -56,11 +58,11 @@ module.exports = class LinkController {
     }
 
     static async delete(ctx) {
-        const id = ctx.query.id
-        let ope = await LinkProxy.updateById(id, {
-            delete: true
-        })
-        ctx.body = ope
+        const id = ctx.checkParams('id').notEmpty().value;
+        if (ctx.errors) {
+            ctx.body = ctx.util.refail(null, 10001, ctx.errors)
+            return;
+        }
+        ctx.body = await LinkProxy.deleteByIds([id])
     }
-
 }

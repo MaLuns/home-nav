@@ -49,8 +49,23 @@ module.exports = class LinkInfoProxy {
                         sort: 1,
                         title: 1,
                         status: 1,
+                        statusStr: {
+                            $cond: {
+                                if: { $toBool: "$status" },
+                                then: '已审核',
+                                else: '未审核'
+                            }
+                        },
                         remark: 1,
                         submitInfo: 1,
+                        allocation: { $toBool: "$classID" },
+                        allocationStr: {
+                            $cond: {
+                                if: { $toBool: "$classID" },
+                                then: '已分配',
+                                else: '未分配'
+                            }
+                        },
                         parentTitle: '$parent.title'
                     }
                 },
@@ -76,7 +91,6 @@ module.exports = class LinkInfoProxy {
         return LinkInfo.updateOne({ _id: id }, { $set: doc })
     }
 
-
     static async updateManyByIds(ids = [], doc) {
         var _ids = ids.map(id => ObjectID(id))
         return await LinkInfo.updateMany(
@@ -87,5 +101,12 @@ module.exports = class LinkInfoProxy {
                 $set: doc
             }
         )
+    }
+
+    static async deleteByIds(ids = []) {
+        var _ids = ids.map(id => ObjectID(id))
+        return LinkInfo.deleteMany({
+            _id: { $in: _ids }
+        })
     }
 }
