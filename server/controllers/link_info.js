@@ -18,7 +18,7 @@ module.exports = class LinkController {
             ctx.body = ctx.util.refail(null, 10001, ctx.errors)
             return;
         }
-        let par = uitl.objFilterKey(ctx.request.body, ['logo', 'sort', 'desc'])
+        let par = uitl.objFilterKey(ctx.request.body, ['classID', 'logo', 'sort', 'desc'])
         let res = await LinkProxy.newAndSave({ url, title, ...par })
         ctx.body = ctx.util.resuccess(res)
     }

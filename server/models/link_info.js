@@ -7,7 +7,10 @@ const schema = new Schema(
         logo: String,
         url: String,
         desc: String,
-        sort: Number,
+        sort: {
+            type: Number,
+            default: 0
+        },
         classID: {
             type: mongoose.Types.ObjectId,
             ref: "link_class"

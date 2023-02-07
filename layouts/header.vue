@@ -23,7 +23,9 @@ export default {
         };
     },
     async fetch() {
-        this.nav = await this.$mock("/api/nav");
+        let nav = await this.$mock("/api/nav");
+        this.$store.commit('addNav', nav)
+        this.nav = nav
     },
     mounted() {
         if (process.client) {
@@ -32,9 +34,7 @@ export default {
     },
     methods: {
         init() {
-            this.isActive = JSON.parse(
-                window.localStorage.getItem("theme") || "false"
-            );
+            this.isActive = JSON.parse(window.localStorage.getItem("theme") || "false");
             if (this.isActive) document.documentElement.classList.add("dark");
         },
         handleOpen() {
@@ -179,7 +179,10 @@ export default {
     width: 100vw;
     height: 100vh;
     z-index: -1;
-    background-image: url(https://img.lkxin.cn/tu/2022/10/11/6344bcab11ad9.png);
+    /* background-image: url(~/assets/body.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    opacity: .3; */
 
     div {
         position: fixed;

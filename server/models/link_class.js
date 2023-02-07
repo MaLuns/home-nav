@@ -5,7 +5,10 @@ const schema = new Schema(
     {
         title: String,
         desc: String,
-        sort: Number,
+        sort: {
+            type: Number,
+            default: 0
+        },
         navID: {
             type: mongoose.Types.ObjectId,
             ref: "nav_info"

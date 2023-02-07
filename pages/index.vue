@@ -187,7 +187,7 @@ export default {
     &-input {
         height: 42px;
         border: 0 solid var(--ion-color-step, #fff);
-        border-radius: 3px 0 0 3px;
+        border-radius: 0;
         display: block;
         outline: 0;
         flex: 1;

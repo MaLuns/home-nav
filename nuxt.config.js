@@ -2,7 +2,7 @@ module.exports = {
   telemetry: false, // 关闭提示
   dev: process.env.NODE_ENV !== 'production',
   env: {
-    baseURL: "http://localhost:7000",
+    baseURL: process.env.NODE_ENV !== 'production' ? "http://localhost:7000" : process.env.NAV_BASE_URL,
     port: 7000,
   },
 

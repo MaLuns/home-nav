@@ -78,6 +78,7 @@ const linkclass = {
     create: data => createAPI('/linkclass', 'post', data),
     delete: id => createAPI('/linkclass/' + id, 'delete'),
     update: data => createAPI('/linkclass', 'put', data),
+    childen: data => createAPI('/linkclass/childen', 'get', data),
 }
 
 const link = {

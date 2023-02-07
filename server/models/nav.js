@@ -5,7 +5,10 @@ const schema = new Schema(
     {
         title: String,
         url: String,
-        sort: Number,
+        sort: {
+            type: Number,
+            default: 0
+        },
         isDesc: Boolean,
         delete: {
             type: Boolean,
